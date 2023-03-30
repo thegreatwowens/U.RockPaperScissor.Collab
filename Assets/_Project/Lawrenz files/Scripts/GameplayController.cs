@@ -1,6 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 namespace ddr.RockPaperScissor
 {
@@ -31,7 +32,7 @@ namespace ddr.RockPaperScissor
         Image img_OpponentPicked;
         
         [SerializeField]
-        private TextMeshProUGUI Info_text;
+        private TextMeshProUGUI result_Info_text;
 
         private HandChoices player_picked = HandChoices.None, opponent_picked = HandChoices.None ;
     #endregion
@@ -60,6 +61,8 @@ namespace ddr.RockPaperScissor
 
             }
                 SetOpponentChoice();
+                StartCoroutine(DelayResult());
+                
             }
             
            private void SetOpponentChoice(){
@@ -84,9 +87,51 @@ namespace ddr.RockPaperScissor
 
             }
 
-        private void DecideWinner(){
+        private void CheckWinner(){
             
+                    if(player_picked == opponent_picked){
+                            result_Info_text.text = "Draw!";
+                            animationController.ResultOverlay();
+                            StartCoroutine(ContinuePlay());
+                        return;
+                    }
+
+                    if(player_picked == HandChoices.Paper && opponent_picked == HandChoices.Scissor 
+                    || player_picked == HandChoices.Scissor && opponent_picked == HandChoices.Rock|| player_picked == HandChoices.Rock && opponent_picked == HandChoices.Paper){
+                        result_Info_text.text = "You Lose!";
+                            animationController.ResultOverlay();
+                            StartCoroutine(ContinuePlay());
+                        return;
+                    }
+                    
+                    if(player_picked == HandChoices.Paper && opponent_picked == HandChoices.Rock ||
+                     player_picked == HandChoices.Rock && opponent_picked == HandChoices.Scissor){
+                         result_Info_text.text = "You Win!";
+                            animationController.ResultOverlay();
+                            StartCoroutine(ContinuePlay());
+                        return; 
+
+                    }
+
+
            }
+              IEnumerator DelayResult(){
+                        animationController.PlayerPicked();
+                        animationController.DelayScreen();
+                        yield return new WaitForSeconds(2);
+                        animationController.ShowChoicesResult();
+                        yield return new WaitForSeconds(.8f);
+                        CheckWinner();
+                        
+                }
+                IEnumerator ContinuePlay(){
+
+                    yield return new WaitForSeconds(4f);
+                    animationController.ResetAnimation();
+                }
+
+
+                
         }
            
 

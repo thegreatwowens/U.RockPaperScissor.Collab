@@ -7,23 +7,37 @@ namespace ddr.RockPaperScissor
     public class AnimationController : MonoBehaviour
     {
       [SerializeField]
-      Animator animationControllerHandler, choicesAnimations,waitingControllerHandler;
+      Animator animationControllerHandler, choicesAnimations,waitingControllerHandler,resultHandler;
 
       public void ResetAnimation(){
 
             animationControllerHandler.Play("ShowHandler");
             choicesAnimations.Play("HideHandler");
             waitingControllerHandler.Play("ShowHandler");
+            resultHandler.Play("HideHandler");
 
 
       }
 
      public void PlayerPicked(){
             animationControllerHandler.Play("HideHandler");
-            choicesAnimations.Play("ShowHandler");
             waitingControllerHandler.Play("HideHandler");
 
      }
+
+     public void ShowChoicesResult(){
+            choicesAnimations.Play("ShowHandler");
+     }
+
+     public void DelayScreen(){
+          Debug.Log("Delaying Animations");
+
+     }
+      
+      public void ResultOverlay(){
+          resultHandler.Play("ShowHandler");
+  
+      }
     
     }
 }

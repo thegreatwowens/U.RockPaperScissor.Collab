@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ddr.RockPaperScissor
 {
@@ -8,6 +8,7 @@ namespace ddr.RockPaperScissor
     {
          GameplayController gameplayController;
          AnimationController animationController;
+         
         private void Awake() {
 
                     gameplayController = GetComponent<GameplayController>();
@@ -32,13 +33,11 @@ namespace ddr.RockPaperScissor
                         selectedChoice = HandChoices.Scissor;
                 break;
             }
-                 Debug.Log(selectedChoice);
-                 gameplayController.SetChoice(selectedChoice);
-                animationController.PlayerPicked();
+                 Debug.Log("Player Selected: "+selectedChoice);
+                 gameplayController.SetChoice(selectedChoice);              
         }
 
-
-
+             
 
     }
 }
