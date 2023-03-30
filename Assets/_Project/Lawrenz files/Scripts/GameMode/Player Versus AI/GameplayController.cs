@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
-namespace ddr.RockPaperScissor
+namespace ddr.RockPaperScissor.versusAI
 {
       public enum HandChoices{
         None,
@@ -105,7 +105,7 @@ namespace ddr.RockPaperScissor
                     }
                     
                     if(player_picked == HandChoices.Paper && opponent_picked == HandChoices.Rock ||
-                     player_picked == HandChoices.Rock && opponent_picked == HandChoices.Scissor){
+                     player_picked == HandChoices.Rock && opponent_picked == HandChoices.Scissor|| player_picked == HandChoices.Scissor && opponent_picked == HandChoices.Paper){
                          result_Info_text.text = "You Win!";
                             animationController.ResultOverlay();
                             StartCoroutine(ContinuePlay());
@@ -120,12 +120,13 @@ namespace ddr.RockPaperScissor
                         animationController.DelayScreen();
                         yield return new WaitForSeconds(2);
                         animationController.ShowChoicesResult();
-                        yield return new WaitForSeconds(.8f);
+                        yield return new WaitForSeconds(.2f);
                         CheckWinner();
                         
                 }
                 IEnumerator ContinuePlay(){
 
+                            // can Execute code for Scoring 
                     yield return new WaitForSeconds(4f);
                     animationController.ResetAnimation();
                 }

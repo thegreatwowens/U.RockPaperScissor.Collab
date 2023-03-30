@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ddr.RockPaperScissor
+namespace ddr.RockPaperScissor.versusAI
 {
     public class InputController : MonoBehaviour
     {

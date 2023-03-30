@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ddr.RockPaperScissor
+namespace ddr.RockPaperScissor.versusAI
 {
     public class AnimationController : MonoBehaviour
     {
