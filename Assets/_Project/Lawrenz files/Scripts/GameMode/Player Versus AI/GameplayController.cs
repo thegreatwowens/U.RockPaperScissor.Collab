@@ -44,6 +44,7 @@ namespace ddr.RockPaperScissor.versusAI
         private void Awake() {
             animationController = GetComponent<AnimationController>();
             playerData = GetComponent<PlayerData>();
+            gameplayUIs = GetComponent<GameplayUIs>();
    
         }
 
@@ -106,9 +107,9 @@ namespace ddr.RockPaperScissor.versusAI
                     || player_picked == HandChoices.Scissor && opponent_picked == HandChoices.Rock|| player_picked == HandChoices.Rock && opponent_picked == HandChoices.Paper){
                         result_Info_text.text = "You Lose!";
                             animationController.ResultOverlay();
-                            StartCoroutine(ContinuePlay());
                             playerData.LoseRound();
                             gameplayUIs.UpdateUIText();
+                            StartCoroutine(ContinuePlay());
                         return;
                     }
                     
@@ -116,9 +117,9 @@ namespace ddr.RockPaperScissor.versusAI
                      player_picked == HandChoices.Rock && opponent_picked == HandChoices.Scissor|| player_picked == HandChoices.Scissor && opponent_picked == HandChoices.Paper){
                          result_Info_text.text = "You Win!";
                             animationController.ResultOverlay();
-                            StartCoroutine(ContinuePlay());
                             playerData.Win();
                             gameplayUIs.UpdateUIText();
+                            StartCoroutine(ContinuePlay());
                         return; 
 
                     }
