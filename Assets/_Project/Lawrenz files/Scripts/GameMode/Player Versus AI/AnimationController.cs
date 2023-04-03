@@ -30,6 +30,7 @@ namespace ddr.RockPaperScissor.versusAI
      }
 
      public void DelayScreen(){
+          // can show any animations..
           Debug.Log("Delaying Animations");
 
      }

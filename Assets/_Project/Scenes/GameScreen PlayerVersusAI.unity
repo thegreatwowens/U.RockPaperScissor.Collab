@@ -821,6 +821,7 @@ GameObject:
   - component: {fileID: 634712694}
   - component: {fileID: 634712695}
   - component: {fileID: 634712696}
+  - component: {fileID: 634712697}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -889,8 +890,6 @@ MonoBehaviour:
   img_PlayerPicked: {fileID: 961809920}
   img_OpponentPicked: {fileID: 1630193522}
   result_Info_text: {fileID: 460091423}
-  Score_UI: {fileID: 2082637649}
-  Streak_Count: {fileID: 428242295}
 --- !u!114 &634712696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,6 +905,20 @@ MonoBehaviour:
   playerName: Player
   playercurrentScore: 0
   playerStreakCount: 0
+--- !u!114 &634712697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634712691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030406e6351b4ba46a391fb26a259f7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 2082637649}
+  streakText: {fileID: 428242295}
 --- !u!1 &718424541
 GameObject:
   m_ObjectHideFlags: 0

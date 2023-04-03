@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using ddr.RockPaperScissor.PlayerManager;
+using ddr.RockPaperScissor.UI;
 namespace ddr.RockPaperScissor.versusAI
 {
       public enum HandChoices{
@@ -18,6 +19,8 @@ namespace ddr.RockPaperScissor.versusAI
         #region Variables
              AnimationController animationController;
              PlayerData playerData;
+            GameplayUIs gameplayUIs;
+             
         [Header("Sprites(icon) that is to instantiated")]
         [SerializeField]
         Sprite s_Rock;
@@ -34,11 +37,6 @@ namespace ddr.RockPaperScissor.versusAI
         
         [SerializeField]
         private TextMeshProUGUI result_Info_text;
-        [Header("Testings:")]
-        [SerializeField]
-        TextMeshProUGUI Score_UI;
-        [SerializeField]
-        TextMeshProUGUI Streak_Count;
         
         private HandChoices player_picked = HandChoices.None, opponent_picked = HandChoices.None ;
     #endregion
@@ -95,7 +93,6 @@ namespace ddr.RockPaperScissor.versusAI
                     }
 
             }
-
         private void CheckWinner(){
             
                     if(player_picked == opponent_picked){
@@ -110,8 +107,8 @@ namespace ddr.RockPaperScissor.versusAI
                         result_Info_text.text = "You Lose!";
                             animationController.ResultOverlay();
                             StartCoroutine(ContinuePlay());
-                               playerData.LoseRound();
-                               UpdateUI();
+                            playerData.LoseRound();
+                            gameplayUIs.UpdateUIText();
                         return;
                     }
                     
@@ -121,7 +118,7 @@ namespace ddr.RockPaperScissor.versusAI
                             animationController.ResultOverlay();
                             StartCoroutine(ContinuePlay());
                             playerData.Win();
-                            UpdateUI();
+                            gameplayUIs.UpdateUIText();
                         return; 
 
                     }
@@ -144,12 +141,6 @@ namespace ddr.RockPaperScissor.versusAI
                     yield return new WaitForSeconds(4f);
                     animationController.ResetAnimation();
                 }
-                   private void UpdateUI(){
-
-                    Score_UI.text = "Score: "+ playerData.Score();
-                    Streak_Count.text = "Streak Count: "+ playerData.playerStreakCount;
-
-            }
 
 
                 
