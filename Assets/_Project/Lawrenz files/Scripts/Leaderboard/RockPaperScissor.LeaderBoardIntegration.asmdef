@@ -1,0 +1,19 @@
+{
+    "name": "RockPaperScissor.LeaderBoardIntegration",
+    "rootNamespace": "ddr.RockPaperScissor.Leaderboard",
+    "references": [
+        "GUID:da8443ab5e9bac64894aed34b756097c",
+        "GUID:0ff8a2094fb253441b4c83b2572b188f",
+        "GUID:f803633cdd28d5f419ae218ecc1fc544",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
