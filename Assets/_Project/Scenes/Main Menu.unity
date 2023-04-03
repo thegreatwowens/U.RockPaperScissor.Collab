@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 403.7}
+  m_AnchoredPosition: {x: 0, y: -78}
   m_SizeDelta: {x: 210.33, y: 54.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &233495066
@@ -232,10 +232,10 @@ RectTransform:
   m_Father: {fileID: 1098227354}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 105.04877}
-  m_SizeDelta: {x: -244.06775, y: 100}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 555.93225, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!95 &404107562
 Animator:
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -673,7 +673,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 349}
+  m_AnchoredPosition: {x: 0, y: -128}
   m_SizeDelta: {x: 210.33, y: 54.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2120538934
