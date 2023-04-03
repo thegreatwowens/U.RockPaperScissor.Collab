@@ -38,7 +38,10 @@ namespace ddr.RockPaperScissor.versusAI
         [SerializeField]
         private TextMeshProUGUI result_Info_text;
         
-        private HandChoices player_picked = HandChoices.None, opponent_picked = HandChoices.None ;
+        private HandChoices player_picked = HandChoices.None, opponent_picked = HandChoices.None;
+
+        [SerializeField]
+        private int playerHealth;
     #endregion
 
         private void Awake() {
@@ -110,6 +113,7 @@ namespace ddr.RockPaperScissor.versusAI
                             playerData.LoseRound();
                             gameplayUIs.UpdateUIText();
                             StartCoroutine(ContinuePlay());
+                            playerHealth --;
                         return;
                     }
                     
@@ -135,6 +139,9 @@ namespace ddr.RockPaperScissor.versusAI
                         CheckWinner();
                         
                 }
+
+
+
                 IEnumerator ContinuePlay(){
 
                             // can Execute code for Scoring
@@ -142,8 +149,6 @@ namespace ddr.RockPaperScissor.versusAI
                     yield return new WaitForSeconds(4f);
                     animationController.ResetAnimation();
                 }
-
-
                 
         }
            
