@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_Project/Scenes/GameScreen PlayerVersusPlayer.unity
+    guid: 13467b6403470584ab2a990b24ea2005
+  - enabled: 1
     path: Assets/_Project/Scenes/GameScreen PlayerVersusAI.unity
     guid: d75658d20b2d03241a92acd90c6106aa
   m_configObjects: {}
