@@ -22,7 +22,9 @@ namespace ddr.RockPaperScissor.PVP
             [SerializeField]
             TextMeshProUGUI TurnText;
             [Header("Scores")]
+            [SerializeField]
             TextMeshProUGUI PlayerOneScore;
+            [SerializeField]    
             TextMeshProUGUI PlayerTwoScore;
             private void Awake() {
                 gameplayController = GetComponent<GameplayController>();
@@ -37,7 +39,20 @@ namespace ddr.RockPaperScissor.PVP
                     //Updates Score
                     PlayerOneScore.text =""+ gameplayController.returnPlayerOneScore();
                     PlayerTwoScore.text =""+ gameplayController.returnPlayerTwoScore();
+                      
             }
+            void Update()
+            {
+                  if(gameplayController.PlayerCurrentTurn =="player1"){
+                                TurnText.text = "Your Turn "+pvPGameSetting.playerOne();
+                                return;
+                        }
+                        if(gameplayController.PlayerCurrentTurn =="player2"){
+                                TurnText.text = "Your Turn "+pvPGameSetting.playerTwo();
+                                return;
+                        }
+            }
+
 
     }
 }

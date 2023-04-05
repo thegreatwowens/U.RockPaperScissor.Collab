@@ -24,6 +24,8 @@ namespace ddr.RockPaperScissor.PVP
              
             int currentRound;
 
+            [HideInInspector]
+            public string PlayerCurrentTurn;
          
             [Header("Sprite to be instantiated")]
             [SerializeField]
@@ -50,15 +52,18 @@ namespace ddr.RockPaperScissor.PVP
 
             public void StartGame(){
                         // Initialize Game
-                        uIHandlerController.UpdateUI();
                         currentRound = 1;
                         playerOneScore = 0;
                         playerTwoScore = 0;
-                        uIHandlerController.UpdateUI();  
-                                  
+                         uIHandlerController.UpdateUI();
+                         animationController.StartButtonClicked();
+                         PlayerCurrentTurn = "player1";     
             }
 
-            
+            public void Pi(){
+                    
+
+            }
 
             //return roundslefts
             public int returnRoundleft(){
