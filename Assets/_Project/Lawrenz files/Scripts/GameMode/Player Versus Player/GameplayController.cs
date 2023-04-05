@@ -39,7 +39,7 @@ namespace ddr.RockPaperScissor.PVP
                 [SerializeField]
                 Image _PlayerTwoChoice;
 
-            private HandChoices ChoicePlayerOne = HandChoices.None, ChoicePlayerTwo = HandChoices.None;
+           // private HandChoices ChoicePlayerOne = HandChoices.None, ChoicePlayerTwo = HandChoices.None;
 
                 
             void Awake()
