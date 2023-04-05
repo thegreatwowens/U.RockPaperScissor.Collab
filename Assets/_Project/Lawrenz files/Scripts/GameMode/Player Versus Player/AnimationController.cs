@@ -7,7 +7,7 @@ namespace ddr.RockPaperScissor.PVP
     public class AnimationController : MonoBehaviour
     {
         [SerializeField]
-        Animator playerOneHandler,playerTwoHandler, GameSettingsHandler;
+        Animator playerOneHandler,playerTwoHandler, GameSettingsHandler,turnHandler;
 
 
        
@@ -37,8 +37,8 @@ namespace ddr.RockPaperScissor.PVP
         // GameSetting Method
          public void StartButtonClicked(){
                         GameSettingsHandler.Play("HideHandler");
-                        playerOneHandler.Play("ShowHandler");
-                        playerTwoHandler.Play("ShowHandler");
+                        playerOneHandler.Play("Idle");
+                        turnHandler.Play("Blinking");
 
             }
          public void ExitClicked(){

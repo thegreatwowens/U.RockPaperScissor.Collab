@@ -890,6 +890,7 @@ MonoBehaviour:
   img_PlayerPicked: {fileID: 961809920}
   img_OpponentPicked: {fileID: 1630193522}
   result_Info_text: {fileID: 460091423}
+  playerHealth: 0
 --- !u!114 &634712696
 MonoBehaviour:
   m_ObjectHideFlags: 0
