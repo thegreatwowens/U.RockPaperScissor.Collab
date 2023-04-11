@@ -133,7 +133,7 @@ namespace ddr.RockPaperScissor.versusAI
               IEnumerator DelayResult(){
                         animationController.PlayerPicked();
                         animationController.DelayScreen();
-                        yield return new WaitForSeconds(2);
+                        yield return new WaitForSeconds(3f);
                         animationController.ShowChoicesResult();
                         yield return new WaitForSeconds(.2f);
                         CheckWinner();
@@ -146,7 +146,7 @@ namespace ddr.RockPaperScissor.versusAI
 
                             // can Execute code for Scoring
                     
-                    yield return new WaitForSeconds(4f);
+                    yield return new WaitForSeconds(.5f);
                     animationController.ResetAnimation();
                 }
                 
