@@ -1,0 +1,16 @@
+{
+    "name": "Leaderboard.RockPaperScissor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b9efedd3e110f724888b926593533b65"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

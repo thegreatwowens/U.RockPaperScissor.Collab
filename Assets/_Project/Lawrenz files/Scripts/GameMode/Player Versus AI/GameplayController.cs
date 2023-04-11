@@ -4,6 +4,9 @@ using TMPro;
 using System.Collections;
 using ddr.RockPaperScissor.PlayerManager;
 using ddr.RockPaperScissor.UI;
+using System.Collections.Generic;
+
+
 namespace ddr.RockPaperScissor.versusAI
 {
       public enum HandChoices{
@@ -41,7 +44,13 @@ namespace ddr.RockPaperScissor.versusAI
         private HandChoices player_picked = HandChoices.None, opponent_picked = HandChoices.None;
 
         [SerializeField]
-        private int playerHealth;
+        GameObject healthIcon;
+        [SerializeField]
+        private int playerHealth = 3;
+        [SerializeField]
+        List<GameObject> Health;
+        [SerializeField]
+        GameObject HealthParent;
     #endregion
 
         private void Awake() {
@@ -51,7 +60,46 @@ namespace ddr.RockPaperScissor.versusAI
    
         }
 
+            void Start()
+            {
+               
+                animationController.ShowInstruction();
+            }
 
+            public void GameStart(){
+             
+               animationController.HideInstruction();
+                animationController.GameStart();
+                PopulateHealth();
+            }
+
+            public void PopulateHealth(){
+
+                        for(int i=0;i<=playerHealth-1;i++){
+
+                         Health.Add(Instantiate(healthIcon,HealthParent.transform));
+                    }
+                  
+                    
+            }
+            private void SetOpponentChoice(){
+                    int rnd = Random.Range(0,3);
+                    switch (rnd)
+                    {
+                        case 0: 
+                                opponent_picked = HandChoices.Rock;
+                                img_OpponentPicked.sprite = s_Rock;
+                        break;
+                        case 1: 
+                                opponent_picked = HandChoices.Paper;
+                                img_OpponentPicked.sprite = s_Paper;
+                        break;
+                        case 2: 
+                                opponent_picked = HandChoices.Scissor;
+                                img_OpponentPicked.sprite = s_Scissor;
+                        break;
+                    }
+            }
         public void SetChoice(HandChoices picked){
 
             switch (picked){
@@ -69,34 +117,19 @@ namespace ddr.RockPaperScissor.versusAI
                             img_PlayerPicked.sprite = s_Scissor;
                             player_picked = HandChoices.Scissor;
                             break;
-
             }
                 SetOpponentChoice();
                 StartCoroutine(DelayResult());
-                
             }
             
-           private void SetOpponentChoice(){
-                        int rnd = Random.Range(0,3);
-                    switch (rnd)
-                    {
-                        case 0: 
-                                opponent_picked = HandChoices.Rock;
-                                img_OpponentPicked.sprite = s_Rock;
-                        break;
-                        case 1: 
-                                opponent_picked = HandChoices.Paper;
-                                img_OpponentPicked.sprite = s_Paper;
-                        break;
-                        case 2: 
-                                opponent_picked = HandChoices.Scissor;
-                                img_OpponentPicked.sprite = s_Scissor;
-                        break;
-
-
-                    }
-
-            }
+              IEnumerator DelayResult(){
+                        animationController.PlayerPicked();
+                        animationController.DelayScreen();
+                        yield return new WaitForSeconds(1f);
+                        animationController.ShowChoicesResult();
+                        yield return new WaitForSeconds(.5f);
+                        CheckWinner();
+                }
         private void CheckWinner(){
             
                     if(player_picked == opponent_picked){
@@ -112,8 +145,7 @@ namespace ddr.RockPaperScissor.versusAI
                             animationController.ResultOverlay();
                             playerData.LoseRound();
                             gameplayUIs.UpdateUIText();
-                            StartCoroutine(ContinuePlay());
-                            playerHealth --;
+                            StartCoroutine(ContinuePlay());        
                         return;
                     }
                     
@@ -125,29 +157,18 @@ namespace ddr.RockPaperScissor.versusAI
                             gameplayUIs.UpdateUIText();
                             StartCoroutine(ContinuePlay());
                         return; 
-
                     }
-
-         
            }
-              IEnumerator DelayResult(){
-                        animationController.PlayerPicked();
-                        animationController.DelayScreen();
-                        yield return new WaitForSeconds(3f);
-                        animationController.ShowChoicesResult();
-                        yield return new WaitForSeconds(.2f);
-                        CheckWinner();
-                        
-                }
-
-
-
                 IEnumerator ContinuePlay(){
 
                             // can Execute code for Scoring
                     
-                    yield return new WaitForSeconds(.5f);
+                    yield return new WaitForSeconds(1f);
                     animationController.ResetAnimation();
+                }
+
+                public void GameFinished(){
+                    playerData.SubmitScore();       
                 }
                 
         }

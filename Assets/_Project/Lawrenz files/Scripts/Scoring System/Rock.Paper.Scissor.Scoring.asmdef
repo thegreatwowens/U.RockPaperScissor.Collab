@@ -2,7 +2,8 @@
     "name": "Rock.Paper.Scissor",
     "rootNamespace": "ddr.RockPaperScissor.PlayerManager",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:b9efedd3e110f724888b926593533b65"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

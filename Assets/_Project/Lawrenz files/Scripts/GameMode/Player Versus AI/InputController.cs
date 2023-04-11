@@ -19,7 +19,6 @@ namespace ddr.RockPaperScissor.versusAI
             string choiceName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
 
             HandChoices selectedChoice = HandChoices.None;
-
             switch(choiceName){
 
                 case "Rock":

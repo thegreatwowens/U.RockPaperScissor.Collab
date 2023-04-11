@@ -13,7 +13,10 @@ namespace ddr.RockPaperScissor.UI
         }
         
         public void UpdateUIText(){
+                    if(scoreText != null)
                     scoreText.text = "Score: "+ playerData.Score();
+                    
+                    if(streakText != null)
                     streakText.text = "Streak Count: "+ playerData.playerStreakCount;
         }
 

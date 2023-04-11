@@ -4,11 +4,13 @@
     "references": [
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:0ff8a2094fb253441b4c83b2572b188f",
-        "GUID:f803633cdd28d5f419ae218ecc1fc544"
+        "GUID:f803633cdd28d5f419ae218ecc1fc544",
+        "GUID:b9efedd3e110f724888b926593533b65",
+        "GUID:7913f8c7d3b872045ad51fcc9570efd6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
