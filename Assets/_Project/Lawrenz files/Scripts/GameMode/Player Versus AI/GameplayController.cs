@@ -6,7 +6,6 @@ using ddr.RockPaperScissor.PlayerManager;
 using ddr.RockPaperScissor.UI;
 using System.Collections.Generic;
 
-
 namespace ddr.RockPaperScissor.versusAI
 {
       public enum HandChoices{
@@ -41,22 +40,18 @@ namespace ddr.RockPaperScissor.versusAI
         [SerializeField]
         private TextMeshProUGUI result_Info_text;
         
+        [SerializeField]
+        private int playerHealth {get; set;}
+        
         private HandChoices player_picked = HandChoices.None, opponent_picked = HandChoices.None;
 
-        [SerializeField]
-        GameObject healthIcon;
-        [SerializeField]
-        private int playerHealth = 3;
-        [SerializeField]
-        List<GameObject> Health;
-        [SerializeField]
-        GameObject HealthParent;
     #endregion
 
         private void Awake() {
             animationController = GetComponent<AnimationController>();
             playerData = GetComponent<PlayerData>();
             gameplayUIs = GetComponent<GameplayUIs>();
+            Application.targetFrameRate=90;
    
         }
 
@@ -64,24 +59,20 @@ namespace ddr.RockPaperScissor.versusAI
             {
                
                 animationController.ShowInstruction();
+                 playerHealth = 3;
             }
 
             public void GameStart(){
              
                animationController.HideInstruction();
                 animationController.GameStart();
-                PopulateHealth();
+                gameplayUIs.UpdateUIText();
+               
             }
 
-            public void PopulateHealth(){
-
-                        for(int i=0;i<=playerHealth-1;i++){
-
-                         Health.Add(Instantiate(healthIcon,HealthParent.transform));
-                    }
-                  
-                    
-            }
+                public int playerHealthvalue(){
+                    return playerHealth;
+                }
             private void SetOpponentChoice(){
                     int rnd = Random.Range(0,3);
                     switch (rnd)
@@ -141,28 +132,42 @@ namespace ddr.RockPaperScissor.versusAI
 
                     if(player_picked == HandChoices.Paper && opponent_picked == HandChoices.Scissor 
                     || player_picked == HandChoices.Scissor && opponent_picked == HandChoices.Rock|| player_picked == HandChoices.Rock && opponent_picked == HandChoices.Paper){
-                        result_Info_text.text = "You Lose!";
+                        result_Info_text.text = "You Lose";
                             animationController.ResultOverlay();
                             playerData.LoseRound();
                             gameplayUIs.UpdateUIText();
-                            StartCoroutine(ContinuePlay());        
-                        return;
+                            playerHealth --;     
+                             if(playerHealth >0){
+                            StartCoroutine(ContinuePlay());
+                             }
+                             else
+                            {
+                                 result_Info_text.text = "Back to MainMenu";
+                                 GameFinished();
+                                 animationController.ResultOverlay();
+                                SceneChanger.instance.FadeToNextScene(0);
+
+                            } 
+                    
+                            return;
                     }
                     
                     if(player_picked == HandChoices.Paper && opponent_picked == HandChoices.Rock ||
                      player_picked == HandChoices.Rock && opponent_picked == HandChoices.Scissor|| player_picked == HandChoices.Scissor && opponent_picked == HandChoices.Paper){
-                         result_Info_text.text = "You Win!";
+                         result_Info_text.text = playerData.playerName+" Win!";
                             animationController.ResultOverlay();
                             playerData.Win();
                             gameplayUIs.UpdateUIText();
-                            StartCoroutine(ContinuePlay());
-                        return; 
+                            if(playerHealth >0){
+                               StartCoroutine(ContinuePlay());
+                            }
+                            return;
                     }
            }
                 IEnumerator ContinuePlay(){
 
                             // can Execute code for Scoring
-                    
+                        gameplayUIs.UpdateUIText();
                     yield return new WaitForSeconds(1f);
                     animationController.ResetAnimation();
                 }
@@ -171,6 +176,9 @@ namespace ddr.RockPaperScissor.versusAI
                     playerData.SubmitScore();       
                 }
                 
+                public void exitOnly(){
+                    SceneChanger.instance.FadeToNextScene(0);
+                }
         }
            
 

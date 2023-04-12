@@ -1,10 +1,14 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using CarterGames.Assets.LeaderboardManager;
+
 namespace ddr.RockPaperScissor.UI
 {
     public class GameManager : MonoBehaviour
     {
         MainMenuAnimations animations;
+        
+        [SerializeField]
+        OptionScript optionScript;
 
         void Awake()
         {
@@ -13,19 +17,23 @@ namespace ddr.RockPaperScissor.UI
 
 
         public void Options(){
-                animations.ShowOption();
+            animations.ShowOption();
+            optionScript.optionClicked();
         }
         public void LeaderBoard(){
-                animations.ShowLeaderBoard();
+            animations.ShowLeaderboard();
+            LeaderboardManager.GetLeaderboard("RockPaperScissorRanking");
+            LeaderboardManager.Load();
+            
         }
         public void PlayerVersusAI(){
-                animations.StartGame();
-                 SceneManager.LoadScene("GameScreen PlayerVersusAI");
+            SceneChanger.instance.FadeToNextScene(1);
         }
         public void PlayerVesusPlayer(){
-            animations.StartGame();
-            SceneManager.LoadScene("GameScreen PlayerVersusPlayer");
-
+             SceneChanger.instance.FadeToNextScene(2);
+        }
+        public void backToMainMenu(){
+            animations.BackToMainMenu();
         }
 
     }

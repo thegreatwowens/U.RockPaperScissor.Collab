@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 namespace CarterGames.Assets.LeaderboardManager
 {
     [HelpURL("https://carter.games/leaderboardmanager/leaderboarddisplay")]
@@ -169,21 +169,21 @@ namespace CarterGames.Assets.LeaderboardManager
                 if (_data.Length + startAt <= i) return;
 
                 GameObject _obj;
-                Text[] _text;
+                TextMeshProUGUI[] _text;
 
                 if (i + startAt >= _rowCount + startAt)
                 {
                     _obj = Instantiate(rowPrefab, boardParent);
                     _obj.name = "Leaderboard Display Row";
                     cachedRows.Add(_obj);
-                    _text = _obj.GetComponentsInChildren<Text>(true);
+                    _text = _obj.GetComponentsInChildren<TextMeshProUGUI>(true);
                 }
                 else
                 {
                     _obj = boardParent.transform.GetChild(i).gameObject;
                     _obj.name = "Leaderboard Display Row";
                     cachedRows.Add(_obj);
-                    _text = _obj.GetComponentsInChildren<Text>(true);
+                    _text = _obj.GetComponentsInChildren<TextMeshProUGUI>(true);
                 }
 
                 if (!_obj.activeInHierarchy)
