@@ -10,7 +10,8 @@ namespace ddr.RockPaperScissor.UI
         GameplayController gameplayController;
         PlayerData  playerData;
         [SerializeField]
-        TextMeshProUGUI scoreText, streakText,playerName,playerhealth;
+        TextMeshProUGUI scoreText, streakText,playerName,playerhealth, ContinueScore;
+
         private void Awake() {
             playerData = GetComponent<PlayerData>();
         }
@@ -22,9 +23,9 @@ namespace ddr.RockPaperScissor.UI
                     if(streakText != null)
                     streakText.text = "Streak Count: "+ playerData.playerStreakCount;
                     if(playerName !=null)
-                    playerName.text = "Name: "+ playerData.playerName;
-                    if(playerhealth !=null)
-                    playerhealth.text = gameplayController.playerHealthvalue().ToString();
+                    playerName.text = "Your Name: "+ playerData.playerName;
+                    if(ContinueScore !=null)
+                    ContinueScore.text ="Your Score: "+playerData.Score();
                     
         }
 

@@ -57,7 +57,9 @@ namespace ddr.RockPaperScissor.PlayerManager
         public void SubmitScore(){
                   LeaderboardManager.AddEntryToBoard("RockPaperScissorRanking",playerName,playercurrentScore);
                   LeaderboardManager.Save();
+                  playercurrentScore = 0;
         }
+        
 
 
 

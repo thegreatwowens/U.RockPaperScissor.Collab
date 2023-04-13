@@ -5,6 +5,7 @@ using System.Collections;
 using ddr.RockPaperScissor.PlayerManager;
 using ddr.RockPaperScissor.UI;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 namespace ddr.RockPaperScissor.versusAI
 {
@@ -41,13 +42,23 @@ namespace ddr.RockPaperScissor.versusAI
         private TextMeshProUGUI result_Info_text;
         
         [SerializeField]
-        private int playerHealth {get; set;}
+        private int playerHealth {get;set;}
+        [Header("Health System/Variables")]
+        [SerializeField]
+        GameObject HealthContainer;
+        [SerializeField]
+        GameObject lifeToBeInstantiated;
+        [SerializeField]
+        List<GameObject> playerHealthObj;
+        
+        public UnityEvent onGameFinished;
         
         private HandChoices player_picked = HandChoices.None, opponent_picked = HandChoices.None;
 
     #endregion
 
         private void Awake() {
+        
             animationController = GetComponent<AnimationController>();
             playerData = GetComponent<PlayerData>();
             gameplayUIs = GetComponent<GameplayUIs>();
@@ -59,15 +70,24 @@ namespace ddr.RockPaperScissor.versusAI
             {
                
                 animationController.ShowInstruction();
-                 playerHealth = 3;
+               
             }
-
+       
             public void GameStart(){
-             
-               animationController.HideInstruction();
+                playerHealth = 2;
+                animationController.HideInstruction();
                 animationController.GameStart();
                 gameplayUIs.UpdateUIText();
+                InstantiateHealth();
+                 
+                 
                
+            }
+            public void InstantiateHealth(){
+                         for(int i = 0;i<=playerHealth;i++){
+                    //LeanTween.scale(playerHealthObj.Add(Instantiate(lifeToBeInstantiated,HealthContainer.transform))),new Vector3(1,1,1),.3f).setDelay(.2f).setEase(LeanTweenType.easeInOutElastic);
+                        playerHealthObj.Add(Instantiate(lifeToBeInstantiated,HealthContainer.transform));
+                 }
             }
 
                 public int playerHealthvalue(){
@@ -121,6 +141,20 @@ namespace ddr.RockPaperScissor.versusAI
                         yield return new WaitForSeconds(.5f);
                         CheckWinner();
                 }
+
+            private void DecreaseHealth(){
+                        
+                        DestroyImmediate(HealthContainer.transform.GetChild(playerHealth).gameObject);
+                        playerHealthObj.RemoveAt(playerHealth);
+                        playerHealth--;
+                        if(playerHealth <0){
+                            animationController.GameOverAnimation();
+                            GameFinished();
+                        }
+                        else {
+                            StartCoroutine(ContinuePlay());
+                        }
+            }
         private void CheckWinner(){
             
                     if(player_picked == opponent_picked){
@@ -132,24 +166,14 @@ namespace ddr.RockPaperScissor.versusAI
 
                     if(player_picked == HandChoices.Paper && opponent_picked == HandChoices.Scissor 
                     || player_picked == HandChoices.Scissor && opponent_picked == HandChoices.Rock|| player_picked == HandChoices.Rock && opponent_picked == HandChoices.Paper){
-                        result_Info_text.text = "You Lose";
-                            animationController.ResultOverlay();
-                            playerData.LoseRound();
-                            gameplayUIs.UpdateUIText();
-                            playerHealth --;     
-                             if(playerHealth >0){
-                            StartCoroutine(ContinuePlay());
-                             }
-                             else
-                            {
-                                 result_Info_text.text = "Back to MainMenu";
-                                 GameFinished();
-                                 animationController.ResultOverlay();
-                                SceneChanger.instance.FadeToNextScene(0);
-
-                            } 
-                    
-                            return;
+                        result_Info_text.text = "CPU Win!";
+                                playerData.LoseRound();
+                                gameplayUIs.UpdateUIText();
+                                if(playerHealthObj.Count >-1){
+                                    DecreaseHealth(); 
+                                    }
+                                animationController.ResultOverlay();
+                                return;
                     }
                     
                     if(player_picked == HandChoices.Paper && opponent_picked == HandChoices.Rock ||
@@ -158,12 +182,11 @@ namespace ddr.RockPaperScissor.versusAI
                             animationController.ResultOverlay();
                             playerData.Win();
                             gameplayUIs.UpdateUIText();
-                            if(playerHealth >0){
-                               StartCoroutine(ContinuePlay());
-                            }
+                            StartCoroutine(ContinuePlay());
                             return;
                     }
            }
+           
                 IEnumerator ContinuePlay(){
 
                             // can Execute code for Scoring
@@ -173,12 +196,23 @@ namespace ddr.RockPaperScissor.versusAI
                 }
 
                 public void GameFinished(){
-                    playerData.SubmitScore();       
+                    playerData.SubmitScore();
+                        if(onGameFinished!=null)
+                        onGameFinished.Invoke();     
                 }
                 
-                public void exitOnly(){
+                public void ExitToMainMenu(){
                     SceneChanger.instance.FadeToNextScene(0);
+
                 }
+                public void ClickedOption(){
+                            Time.timeScale =1;
+                            animationController.ShowOption();
+                }
+                public void TryAgain(){
+                            animationController.HideGameCompletedWindow();
+                }
+                
         }
            
 
