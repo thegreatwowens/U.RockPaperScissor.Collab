@@ -15,7 +15,14 @@ namespace ddr.RockPaperScissor.UI
             animations = GetComponent<MainMenuAnimations>();
         }
 
-
+        void Start()
+        {
+            if(LeaderboardManager.BoardExists("RockPaperScissorRanking"))
+            {
+                Debug.Log("Leaderboard Exist");
+            }else{ LeaderboardManager.CreateLeaderboard("RockPaperScissorRanking");}
+            
+        }
         public void Options(){
             animations.ShowOption();
             optionScript.optionClicked();
@@ -34,6 +41,12 @@ namespace ddr.RockPaperScissor.UI
         }
         public void backToMainMenu(){
             animations.BackToMainMenu();
+        }
+        public void ResetLeaderBoard(){
+                LeaderboardManager.DeleteLeaderboard("RockPaperScissorRanking");
+                LeaderboardManager.CreateLeaderboard("RockPaperScissorRanking");
+                
+
         }
 
     }

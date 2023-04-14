@@ -9,6 +9,16 @@ public class OptionScript : MonoBehaviour
 
         public TMP_InputField nameInput;
         public UnityEvent executeSomething; 
+        void Start()
+        {
+                if(nameInput.text == null)
+                        {
+                               if(PlayerPrefs.GetString("SavedPlayerName")== null)
+                                        nameInput.text = "Player";
+                                else
+                                        PlayerPrefs.GetString("SavedPlayerName");
+                        }
+        }
         public void ChangeScene(){
             
             SceneChanger.instance.FadeToNextScene(SceneIndex);

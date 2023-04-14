@@ -1,18 +1,23 @@
 using System.Collections;
 using UnityEngine;
-using DentedPixel;
+using ddr.RockPaperScissor.PlayerManager;
+using TMPro;
 namespace ddr.RockPaperScissor.versusAI
 {
     public class AnimationController : MonoBehaviour
     {
       [SerializeField]
+      PlayerData playerData;
+      [SerializeField]
       GameObject instruction,handlerChoices,opponentPicked,playerPicked,playerdataHandler,
-                resultHandlerText,optionButton,showOptionHandler,GameDoneHandler;
+                resultHandlerText,optionButton,showOptionHandler,GameDoneHandler,PlayerTurnHandler;
       [SerializeField]
-      CanvasGroup choicesHandlerCanvas,BackgroundGameDoneHandler;
-
+      CanvasGroup choicesHandlerCanvas,BackgroundGameDoneHandler,BackgroundOverlayOption;
+      [Header("WinningStreak Instantiation")]
       [SerializeField]
-      GameObject  waitingPlayerpick;
+      GameObject streakingParentObj;
+      [SerializeField]
+      GameObject winningStreakObj;
 
       
       public void ResetAnimation(){
@@ -28,24 +33,45 @@ namespace ddr.RockPaperScissor.versusAI
 
       public void GameStart(){
                 StartCoroutine(DelayInteractHandler());
-              LeanTween.scale(handlerChoices,new Vector3(1,1,1),1).setDelay(.5f).setEase(LeanTweenType.easeOutElastic);
+              LeanTween.scale(handlerChoices,new Vector3(1,1,1),1).setDelay(.5f).setEase(LeanTweenType.easeInOutQuart);
               LeanTween.scale(playerdataHandler,new Vector3(1,1,1),1f).setDelay(.8f).setEase(LeanTweenType.easeInOutQuart);
               LeanTween.scale(optionButton,new Vector3(1,1,1),.1f);
-            //  StartCoroutine(delayWaitingPlayerPick());
 
       }
+            private void ShowPlayerTurn(){
+              
+            }
+             private void HidePlayerTurn(){
+
+            }
       public void ShowOption(){
+              ShowOptionBackOverlay();
               LeanTween.scale(showOptionHandler,new Vector3(1.2f,1.2f,1.2f),1f).setEase(LeanTweenType.easeInOutQuart);
               LeanTween.moveLocal(showOptionHandler,new Vector3(185,160,0f),.5f);
               LeanTween.scale(optionButton,new Vector3(0,0,0),.1f);
                
       }
       public void HideOption(){
+              HideOptionBackOverlay();
               LeanTween.moveLocal(showOptionHandler,new Vector3(190,461,0f),.5f);
               LeanTween.scale(showOptionHandler,new Vector3(0,0,0),.9f).setEase(LeanTweenType.easeOutExpo);
               LeanTween.scale(optionButton,new Vector3(1,1,1),.1f);
+              
              
       }
+            private void ShowOptionBackOverlay(){
+                        CanvasGroup interactables = BackgroundOverlayOption.GetComponent<CanvasGroup>();
+                              interactables.interactable = true;
+                              interactables.blocksRaycasts = true;
+                        LeanTween.alphaCanvas(BackgroundOverlayOption,1,.2f);
+            }
+            private void HideOptionBackOverlay(){
+                  CanvasGroup interactables = BackgroundOverlayOption.GetComponent<CanvasGroup>();
+                              interactables.interactable = false;
+                              interactables.blocksRaycasts = false;
+                        LeanTween.alphaCanvas(BackgroundOverlayOption,0,.2f);
+
+            }
            IEnumerator DelayInteractHandler(){
                 DisableInteractChoices();
                 yield return new WaitForSeconds(1.5f);
@@ -55,8 +81,8 @@ namespace ddr.RockPaperScissor.versusAI
 
                    DisableInteractChoices();
                   LeanTween.scale(handlerChoices,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeInElastic);
-                   LeanTween.scale(playerdataHandler,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeOutQuart);
-                  LeanTween.scale(optionButton,new Vector3(0,0,0),.1f);
+                  LeanTween.scale(playerdataHandler,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeOutQuart);
+                  LeanTween.scale(optionButton,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeOutQuart);
      }
     public void DisableInteractChoices(){
               choicesHandlerCanvas.interactable = false;
@@ -79,7 +105,8 @@ namespace ddr.RockPaperScissor.versusAI
                 CanvasGroup interactables = instruction.transform.GetComponentInChildren<CanvasGroup>();
                   interactables.interactable = false;
                   interactables.blocksRaycasts = false;
-                LeanTween.scale(instruction,new Vector3(0,0,0),1).setEase(LeanTweenType.easeInOutElastic);
+                LeanTween.scale(instruction,new Vector3(0,0,0),1).setEase(LeanTweenType.easeInOutElastic).setLoopClamp(0);
+                
       }
      public void DelayScreen(){
           // can show any animations..
@@ -104,17 +131,18 @@ namespace ddr.RockPaperScissor.versusAI
             FadeOutHandler();
       }
 
+            // Show Game Completed Window
       private void FadeOutHandler(){
                 LeanTween.scale(resultHandlerText,new Vector3(0,0,0),.5f).setOnComplete(ShowGameCompletedWindow);  
       }
       private void ShowGameCompletedWindow(){
-                LeanTween.alphaCanvas(BackgroundGameDoneHandler,1,.6f);
-                LeanTween.scale(GameDoneHandler,new Vector3(1.3f,1.3f,1.3f),1).setDelay(.7f).setEase(LeanTweenType.easeInOutElastic);
+                LeanTween.alphaCanvas(BackgroundGameDoneHandler,1,.3f);
+                LeanTween.scale(GameDoneHandler,new Vector3(1.3f,1.3f,1.3f),.5f).setDelay(.6f).setEase(LeanTweenType.easeInOutElastic);
       }
       
       public void HideGameCompletedWindow(){
-              LeanTween.scale(GameDoneHandler,new Vector3(0,0,0),1).setEase(LeanTweenType.easeInOutElastic);
-              LeanTween.alphaCanvas(BackgroundGameDoneHandler,0,.6f).setDelay(.7f).setOnComplete(Delay);
+              LeanTween.scale(GameDoneHandler,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeInOutElastic);
+              LeanTween.alphaCanvas(BackgroundGameDoneHandler,0,.3f).setDelay(.7f).setOnComplete(Delay);
       }
 
       private void Delay(){
@@ -136,14 +164,26 @@ namespace ddr.RockPaperScissor.versusAI
                   interactables.blocksRaycasts = true;
       }
       
+      public void ShowStreakAnimation(){
+            StartCoroutine(StreakInstantiate());
 
-        IEnumerator delayWaitingPlayerPick(){
+      }
+      IEnumerator StreakInstantiate(){
+            Instantiate(winningStreakObj,streakingParentObj.transform);
+            TextMeshProUGUI text  = winningStreakObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                  text.text = playerData.ReturnCurrentStreak()+"!";
+            yield return new WaitForEndOfFrame();
+            LeanTween.cancel(resultHandlerText);
+            LeanTween.scale(streakingParentObj.transform.GetChild(0).gameObject,new Vector3(2.5f,2.5f,2.5f),1f)
+            .setDelay(.1f).setEase(LeanTweenType.easeOutBounce).setDestroyOnComplete(streakingParentObj.transform.GetChild(0).gameObject);
+      }
+      public void HideStreakAnimation(){
 
-            yield return new WaitForSeconds(.5f);
-              waitingPlayerpick.SetActive(true);
-        }  
+      }
+
+
     }
-
+      
    
 
   

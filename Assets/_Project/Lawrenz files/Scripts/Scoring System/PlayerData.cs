@@ -13,7 +13,6 @@ namespace ddr.RockPaperScissor.PlayerManager
                 // standard value per correct answer vs CPU
                 int normalScore = 25;
                 // Streaking multiplier
-
                 int streakingScore = 50;
                 public int playerStreakCount = 0;
 
@@ -33,19 +32,26 @@ namespace ddr.RockPaperScissor.PlayerManager
         return playercurrentScore;
       }
       private void IncrementScore(){
-                        if(playerStreakCount <= 3){
-                                playercurrentScore = normalScore +playercurrentScore;
-                                playerStreakCount++;
-                                return;
-                        }
-                        
 
-                        if(playerStreakCount >4){
-                                 playercurrentScore = streakingScore +playercurrentScore;
-                                 playerStreakCount++;
-                                 return;
+        
+                        if(playerStreakCount >=3 && playerStreakCount !>=5){
+                                playerStreakCount++;
+                                playercurrentScore +=normalScore* 2;
+                                
+                        }else if(playerStreakCount >=5){
+                                playerStreakCount++;
+                                 playercurrentScore+=streakingScore * 2;
+                                 
+                        }else{
+                          playerStreakCount++;
+                          playercurrentScore +=normalScore;
+                          
                         }
     }
+
+      public int ReturnCurrentStreak(){
+          return playerStreakCount;
+      }
         public void Win(){
                 IncrementScore();
         }
