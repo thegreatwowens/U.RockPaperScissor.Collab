@@ -34,11 +34,11 @@ namespace ddr.RockPaperScissor.PVP
                     PlayerNameOne.text = pvPGameSetting.playerOne();
                     PlayerNameTwo.text = pvPGameSetting.playerTwo();
                     // Updates rounds
-                    RoundsLeft.text = "Round "+gameplayController.returnRoundleft()+" of "+
-                    pvPGameSetting.NumberofRounds();
+                   // RoundsLeft.text = "Round "+gameplayController.returnRoundleft()+" of "+
+                    //pvPGameSetting.NumberofRounds();
                     //Updates Score
-                    PlayerOneScore.text =""+ gameplayController.returnPlayerOneScore();
-                    PlayerTwoScore.text =""+ gameplayController.returnPlayerTwoScore();
+                 //   PlayerOneScore.text =""+ gameplayController.returnPlayerOneScore();
+                   // PlayerTwoScore.text =""+ gameplayController.returnPlayerTwoScore();
                       
             }
             void Update()
