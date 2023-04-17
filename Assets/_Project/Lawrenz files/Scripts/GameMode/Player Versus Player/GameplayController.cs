@@ -6,7 +6,7 @@ namespace ddr.RockPaperScissor.PVP
     public class GameplayController : MonoBehaviour
     {
 
-            public enum HandChoices{
+            public enum HandChoicesPVP{
         None,
         Rock,
         Paper,
@@ -14,6 +14,7 @@ namespace ddr.RockPaperScissor.PVP
 
     }
             //referrences
+            [SerializeField]
             AnimationController animationController;
             PvPGameSetting pvPGameSetting;
             UIHandlerController uIHandlerController;
@@ -40,49 +41,93 @@ namespace ddr.RockPaperScissor.PVP
                 Image _playerOneChoice;
                 [SerializeField]
                 Image _PlayerTwoChoice;
-
+            HandChoicesPVP playerOnePicked;
+            HandChoicesPVP playerTwoPicked;
            // private HandChoices ChoicePlayerOne = HandChoices.None, ChoicePlayerTwo = HandChoices.None;
 
                 
-            void Awake()
+            void Start()
             {
-                animationController = GetComponent<AnimationController>();
-                pvPGameSetting = GetComponent<PvPGameSetting>();
-                uIHandlerController = GetComponent<UIHandlerController>();            }
-
-            public void StartGame(){
-                        // Initialize Game
-                        currentRound = 1;
-                        playerOneScore = 0;
-                        playerTwoScore = 0;
-                         uIHandlerController.UpdateUI();
-                         animationController.StartButtonClicked();
-                         PlayerCurrentTurn = "player1";     
+                animationController.ShowGameSettings();
             }
 
-            public void Pi(){
-                    
-
+            public void StartGame(){  
+                animationController.GameStart();
             }
 
-            //return roundslefts
-            public int returnRoundleft(){
-                    
-                    return currentRound;
+            public void PlayerOneTurn(){
+                animationController.PlayerTurn("Player1");
             }
-            // returns playerScore one
-            public int returnPlayerOneScore(){
+            public void PlayerSetChoice(string player, HandChoicesPVP choice){
+                       
+                       switch (choice){
+                            case HandChoicesPVP.Paper:
+                                        if(player == "Player1"){
+                                            _playerOneChoice.sprite = s_Paper;
+                                            playerOnePicked = HandChoicesPVP.Paper;
+                                            animationController.ChoicesInteractable("player",false);
+                                        }
+                                        
+                                        if(player == "Player2"){
+                                            _PlayerTwoChoice.sprite = s_Paper;
+                                            playerTwoPicked = HandChoicesPVP.Paper;
+                                            animationController.ChoicesInteractable("player",false);
+                                        }
+                                 break;
+                            case HandChoicesPVP.Rock:
+                                        if(player == "Player1"){
+                                            _playerOneChoice.sprite = s_Rock;
+                                            playerOnePicked = HandChoicesPVP.Rock;
+                                            animationController.ChoicesInteractable("player",false);
+                                        }
 
-                return playerOneScore;
+                                        if(player == "Player2"){
+                                            _PlayerTwoChoice.sprite = s_Rock;
+                                            playerTwoPicked = HandChoicesPVP.Rock;
+                                            animationController.ChoicesInteractable("player",false);
+                                        }
+                                 break;
+                            case HandChoicesPVP.Scissor:
+                                        if(player == "Player1"){
+                                            _playerOneChoice.sprite = s_Scissor;
+                                            playerOnePicked = HandChoicesPVP.Scissor;
+                                            animationController.ChoicesInteractable("player",false);
+                                        }
+                                        
+                                        if(player == "Player2"){
+                                            _PlayerTwoChoice.sprite = s_Scissor;
+                                            playerTwoPicked = HandChoicesPVP.Scissor;
+                                            animationController.ChoicesInteractable("player",false);
+                                        }
+                                 break;
+
+                       }
+
             }
-            // returns playerScore two
-            public int returnPlayerTwoScore(){
-
-                return playerTwoScore;
+            
+            public void CheckWinner(){
+                        if (playerOnePicked == playerTwoPicked)
+            {
+               
+                return;
             }
 
+            if (playerOnePicked == HandChoicesPVP.Paper && playerTwoPicked == HandChoicesPVP .Scissor
+            || playerOnePicked == HandChoicesPVP .Scissor && playerTwoPicked == HandChoicesPVP .Rock || playerOnePicked == HandChoicesPVP .Rock && playerTwoPicked == HandChoicesPVP .Paper)
+            {
+                
+                return;
+            }
 
+            if (playerOnePicked == HandChoicesPVP .Paper && playerTwoPicked == HandChoicesPVP .Rock ||
+             playerOnePicked == HandChoicesPVP .Rock && playerTwoPicked == HandChoicesPVP .Scissor || playerOnePicked == HandChoicesPVP .Scissor && playerTwoPicked == HandChoicesPVP .Paper)
+            {
+                
+                return;
+            }
 
             
+
+            }
     }
 }

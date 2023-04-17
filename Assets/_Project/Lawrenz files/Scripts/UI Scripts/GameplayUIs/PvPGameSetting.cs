@@ -19,10 +19,9 @@ namespace ddr.RockPaperScissor.UI
         int numberOfRounds;
         string _playerName1,_playerName2;
 
-        void Update()
-        {
-           sliderText.text = ""+slider.value;
-        }
+      public void SliderValueChanged(){
+         sliderText.text = ""+slider.value;
+      }
       public string playerOne(){
             _playerName1 = playerName1.text;
 
