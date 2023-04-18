@@ -18,6 +18,8 @@ namespace ddr.RockPaperScissor.versusAI
       GameObject streakingParentObj;
       [SerializeField]
       GameObject winningStreakObj;
+      
+      string StreakingText= null;
 
       
       public void ResetAnimation(){
@@ -164,18 +166,23 @@ namespace ddr.RockPaperScissor.versusAI
                   interactables.blocksRaycasts = true;
       }
       
-      public void ShowStreakAnimation(){
-            StartCoroutine(StreakInstantiate());
+      public void ShowStreakAnimation(string count){
+            LeanTween.cancel(resultHandlerText);
+            StartCoroutine(StreakInstantiate(count));
 
       }
-      IEnumerator StreakInstantiate(){
+      void Update()
+      {
+            StreakingText = playerData.playerStreakCount+"!";
+      }
+    IEnumerator StreakInstantiate(string streakcount){
             Instantiate(winningStreakObj,streakingParentObj.transform);
             TextMeshProUGUI text  = winningStreakObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                  text.text = playerData.ReturnCurrentStreak()+"!";
+                  text.text=StreakingText;
             yield return new WaitForEndOfFrame();
-            LeanTween.cancel(resultHandlerText);
             LeanTween.scale(streakingParentObj.transform.GetChild(0).gameObject,new Vector3(2.5f,2.5f,2.5f),1f)
-            .setDelay(.1f).setEase(LeanTweenType.easeOutBounce).setDestroyOnComplete(streakingParentObj.transform.GetChild(0).gameObject);
+            .setDelay(.2f).setEase(LeanTweenType.easeOutBounce).setDestroyOnComplete(streakingParentObj.transform.GetChild(0).gameObject);
+                  
       }
       public void HideStreakAnimation(){
 

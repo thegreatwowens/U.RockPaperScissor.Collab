@@ -53,6 +53,8 @@ namespace ddr.RockPaperScissor.versusAI
         List<GameObject> playerHealthObj;
 
         public UnityEvent onGameFinished;
+        [SerializeField]
+        int streakingCount;
 
         private HandChoices player_picked = HandChoices.None, opponent_picked = HandChoices.None;
 
@@ -185,6 +187,7 @@ namespace ddr.RockPaperScissor.versusAI
                 result_Info_text.text = "CPU Win!";
                 animationController.ResultOverlay();
                 playerData.LoseRound();
+                
                 DecreaseHealth();
                 return;
             }
@@ -212,7 +215,10 @@ namespace ddr.RockPaperScissor.versusAI
 
             gameplayUIs.UpdateUIText();
             if(playerData.playerStreakCount >=3 && player_picked != opponent_picked )
-                StartCoroutine(Streak());
+                {
+                    StartCoroutine(Streak());       
+                }
+                
             // can Execute code for Scoring
             
             yield return new WaitForSeconds(1.5f);
@@ -220,10 +226,14 @@ namespace ddr.RockPaperScissor.versusAI
             yield return new WaitForSeconds(1f);
             SetOpponentChoice();
         }
-        
+        void Update()
+        {
+            streakingCount = playerData.playerStreakCount;
+        }
         IEnumerator Streak(){
-            animationController.ShowStreakAnimation();
-            yield return new WaitForSeconds(1f);
+            animationController.ShowStreakAnimation(streakingCount.ToString()+"!");
+            yield return new WaitForSeconds(3f);
+            StopAllCoroutines();
         }
 
         public void GameFinished()

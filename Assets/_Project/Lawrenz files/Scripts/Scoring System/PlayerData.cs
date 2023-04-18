@@ -14,7 +14,7 @@ namespace ddr.RockPaperScissor.PlayerManager
                 int normalScore = 25;
                 // Streaking multiplier
                 int streakingScore = 50;
-                public int playerStreakCount = 0;
+                public int playerStreakCount {get;set;}
 
                 void Awake()
                 {
@@ -37,14 +37,17 @@ namespace ddr.RockPaperScissor.PlayerManager
                         if(playerStreakCount >=3 && playerStreakCount !>=5){
                                 playerStreakCount++;
                                 playercurrentScore +=normalScore* 2;
+                                return;
                                 
                         }else if(playerStreakCount >=5){
                                 playerStreakCount++;
                                  playercurrentScore+=streakingScore * 2;
+                                 return;
                                  
                         }else{
                           playerStreakCount++;
                           playercurrentScore +=normalScore;
+                          return;
                           
                         }
     }
@@ -66,7 +69,6 @@ namespace ddr.RockPaperScissor.PlayerManager
                   playercurrentScore = 0;
         }
         
-
 
 
   

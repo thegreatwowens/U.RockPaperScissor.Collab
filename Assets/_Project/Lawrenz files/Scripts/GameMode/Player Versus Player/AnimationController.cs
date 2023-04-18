@@ -34,7 +34,7 @@ namespace ddr.RockPaperScissor.PVP
                 LeanTween.scale(gameSettingHandler,new Vector3(1,1,1),1).setDelay(1f).setEase(LeanTweenType.easeInOutElastic);
         }
         public void HideGameSettings(){
-                LeanTween.scale(gameSettingHandler,new Vector3(0,0,0),1).setEase(LeanTweenType.easeInElastic);
+                LeanTween.scale(gameSettingHandler,new Vector3(0,0,0),1).setEase(LeanTweenType.easeOutExpo);
                 LeanTween.alphaCanvas(gamesettingBackOverlay,0,.7f).setDelay(1.3f).setOnComplete(FirstStart);
         }
 
@@ -70,7 +70,7 @@ namespace ddr.RockPaperScissor.PVP
                         LeanTween.scale(P2ChoiceHandler,new Vector3(1,1,1),.5f).setEase(LeanTweenType.easeInOutElastic).setOnComplete(ShowPlayer2Data);
         }
         public void ShowPlayer2Data(){
-                    LeanTween.scale(P2Data,new Vector3(1,1,1),1).setEase(LeanTweenType.easeOutQuad);
+                    LeanTween.scale(P2Data,new Vector3(1,1,1),1).setEase(LeanTweenType.easeOutQuad).setOnComplete(ShowTurnOverlay);
 
         }
         
@@ -104,12 +104,18 @@ namespace ddr.RockPaperScissor.PVP
 
 
         }
-
+        
         public void ShowTurnOverlay(){
-                 //   LeanTween
+                LeanTween.scale(PlayerTurnOverlay,new Vector3(.5f,.5f,.5f),.5f).setOnComplete(Loopturn);           
 
         }
+        public void HideTurnOverlay(){
+            LeanTween.scale(PlayerTurnOverlay,new Vector3(0,0,0),.5f);
+        }
 
+        public void Loopturn(){
+                    LeanTween.scale(PlayerTurnOverlay,new Vector3(1f,1,1),2f).setLoopClamp();
+        }
     }
     
 }

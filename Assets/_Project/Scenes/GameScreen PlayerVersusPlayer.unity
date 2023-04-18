@@ -1138,8 +1138,8 @@ RectTransform:
   m_GameObject: {fileID: 331436723}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1897978417}
   m_Father: {fileID: 432076195}
@@ -1830,7 +1830,7 @@ MonoBehaviour:
   PlayerNameOne: {fileID: 0}
   PlayerNameTwo: {fileID: 0}
   RoundsLeft: {fileID: 0}
-  TurnText: {fileID: 261827894}
+  TurnText: {fileID: 1897978418}
   PlayerOneScore: {fileID: 0}
   PlayerTwoScore: {fileID: 0}
 --- !u!114 &634712696

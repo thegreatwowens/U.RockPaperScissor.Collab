@@ -10,7 +10,7 @@ namespace ddr.RockPaperScissor.UI
         GameplayController gameplayController;
         PlayerData  playerData;
         [SerializeField]
-        TextMeshProUGUI scoreText, streakText,playerName,playerhealth, ContinueScore;
+        TextMeshProUGUI scoreText, streakText,playerName,ContinueScore,leaderboardName;
 
         private void Awake() {
             playerData = GetComponent<PlayerData>();
@@ -26,6 +26,9 @@ namespace ddr.RockPaperScissor.UI
                     playerName.text = "Your Name: "+ playerData.playerName;
                     if(ContinueScore !=null)
                     ContinueScore.text ="Your Score: "+playerData.Score();
+                    if(leaderboardName !=null)
+                    leaderboardName.text = "Your Name: "+playerData.playerName;
+
                     
         }
 
