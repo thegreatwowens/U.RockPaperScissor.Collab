@@ -4,6 +4,8 @@ namespace ddr.RockPaperScissor.PVP
 {
     public class AnimationController : MonoBehaviour
     {
+        [SerializeField]
+        GameplayController gameplayController;
         [Header("UIs")]
         [SerializeField]
         GameObject gameSettingHandler;
@@ -114,8 +116,26 @@ namespace ddr.RockPaperScissor.PVP
         }
 
         public void Loopturn(){
-                    LeanTween.scale(PlayerTurnOverlay,new Vector3(1f,1,1),2f).setLoopClamp();
+                    LeanTween.scale(PlayerTurnOverlay,new Vector3(1f,1,1),2f).setLoopPingPong().setOnComplete(CallTurn);
         }
+        public void HidePlayerChoicesPlayerOne()
+        {
+            LeanTween.moveLocalY(P1ChoiceHandler, -600f, 1f).setDelay(.3f).setEase(LeanTweenType.easeInOutExpo);
+            ChoicesInteractable("Player1", false);
+        }
+
+        public void HidePlayerChoicesPlayerTwo()
+        {
+            LeanTween.moveLocalY(P2ChoiceHandler, -600f, 1f).setDelay(.3f).setEase(LeanTweenType.easeInOutExpo);
+            ChoicesInteractable("Player2", false);
+        }
+
+        public void CallTurn()
+        {
+            GameplayController.currentTurnPlayer = GameplayController.currentPlayer.Player1;
+            
+        }
+
     }
     
 }

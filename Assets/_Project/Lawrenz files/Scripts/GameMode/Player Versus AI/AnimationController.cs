@@ -19,11 +19,10 @@ namespace ddr.RockPaperScissor.versusAI
       [SerializeField]
       GameObject winningStreakObj;
       
-      string StreakingText= null;
-
+      public string StreakingText= null;
       
       public void ResetAnimation(){
-
+                  
                  LeanTween.scale(handlerChoices,new Vector3(1,1,1),1).setDelay(1f).setEase(LeanTweenType.easeOutElastic).setOnComplete(CanInteractChoices);
                  LeanTween.moveLocalY(playerPicked,-825.5f,1f).setEase(LeanTweenType.easeOutQuart);
                  LeanTween.moveLocalY(opponentPicked,825.5f,1f).setEase(LeanTweenType.easeOutQuart);
@@ -34,10 +33,11 @@ namespace ddr.RockPaperScissor.versusAI
       }
 
       public void GameStart(){
-                StartCoroutine(DelayInteractHandler());
+              StartCoroutine(DelayInteractHandler());
               LeanTween.scale(handlerChoices,new Vector3(1,1,1),1).setDelay(.5f).setEase(LeanTweenType.easeInOutQuart);
-              LeanTween.scale(playerdataHandler,new Vector3(1,1,1),1f).setDelay(.8f).setEase(LeanTweenType.easeInOutQuart);
+              LeanTween.scale(playerdataHandler,new Vector3(1,1,1),1f).setDelay(.8f).setEase(LeanTweenType.easeInOutQuart).setOnComplete(ShowTurn);
               LeanTween.scale(optionButton,new Vector3(1,1,1),.1f);
+              
 
       }
             private void ShowPlayerTurn(){
@@ -85,6 +85,7 @@ namespace ddr.RockPaperScissor.versusAI
                   LeanTween.scale(handlerChoices,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeInElastic);
                   LeanTween.scale(playerdataHandler,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeOutQuart);
                   LeanTween.scale(optionButton,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeOutQuart);
+            HideTurnOverlay();
      }
     public void DisableInteractChoices(){
               choicesHandlerCanvas.interactable = false;
@@ -166,27 +167,38 @@ namespace ddr.RockPaperScissor.versusAI
                   interactables.blocksRaycasts = true;
       }
       
-      public void ShowStreakAnimation(string count){
+      public void ShowStreakAnimation(string value){
             LeanTween.cancel(resultHandlerText);
-            StartCoroutine(StreakInstantiate(count));
+            StartCoroutine(StreakInstantiate(value));
 
       }
-      void Update()
-      {
-            StreakingText = playerData.playerStreakCount+"!";
-      }
-    IEnumerator StreakInstantiate(string streakcount){
-            Instantiate(winningStreakObj,streakingParentObj.transform);
+    IEnumerator StreakInstantiate(string value){
             TextMeshProUGUI text  = winningStreakObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                  text.text=StreakingText;
-            yield return new WaitForEndOfFrame();
-            LeanTween.scale(streakingParentObj.transform.GetChild(0).gameObject,new Vector3(2.5f,2.5f,2.5f),1f)
-            .setDelay(.2f).setEase(LeanTweenType.easeOutBounce).setDestroyOnComplete(streakingParentObj.transform.GetChild(0).gameObject);
+            text.text = value +"!";
+            yield return new WaitForSeconds(.05f);
+            LeanTween.scale(streakingParentObj.transform.GetChild(0).gameObject, new Vector3(2.5f, 2.5f, 2.5f), 1f)
+            .setDelay(.2f).setEase(LeanTweenType.easeOutBounce).setOnComplete(HideStreakAnimation);
                   
       }
       public void HideStreakAnimation(){
+            LeanTween.scale(streakingParentObj.transform.GetChild(0).gameObject, new Vector3(0,0,0), 1f)
+            .setEase(LeanTweenType.easeOutBounce);
+        }
 
-      }
+        public void ShowTurn()
+        {
+            LeanTween.scale(PlayerTurnHandler, new Vector3(.8f, .8f, .8f), .5f)
+                .setDelay(.5f).setOnComplete(FinalTurnPos);
+        }
+        public void FinalTurnPos()
+        {
+            LeanTween.scale(PlayerTurnHandler, new Vector3(1,1,1), 1f).setLoopPingPong();
+
+        }
+        public void HideTurnOverlay()
+        {
+            LeanTween.cancel(PlayerTurnHandler);
+        }
 
 
     }

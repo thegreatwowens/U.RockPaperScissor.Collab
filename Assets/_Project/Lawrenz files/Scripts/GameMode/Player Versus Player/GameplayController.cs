@@ -13,6 +13,14 @@ namespace ddr.RockPaperScissor.PVP
         Scissor
 
     }
+            public enum currentPlayer
+        {
+               None,
+               Player1,
+               Player2
+
+
+        }
             //referrences
             [SerializeField]
             AnimationController animationController;
@@ -43,6 +51,8 @@ namespace ddr.RockPaperScissor.PVP
                 Image _PlayerTwoChoice;
             HandChoicesPVP playerOnePicked;
             HandChoicesPVP playerTwoPicked;
+
+           public static currentPlayer currentTurnPlayer = currentPlayer.None;
            // private HandChoices ChoicePlayerOne = HandChoices.None, ChoicePlayerTwo = HandChoices.None;
 
                 
@@ -105,7 +115,7 @@ namespace ddr.RockPaperScissor.PVP
 
             }
             
-            public void CheckWinner(){
+           public void CheckWinner(){
                         if (playerOnePicked == playerTwoPicked)
             {
                
@@ -129,5 +139,27 @@ namespace ddr.RockPaperScissor.PVP
             
 
             }
+
+        private void Update()
+        {
+            DeterimneTurn();
+        }
+        public   void DeterimneTurn()
+        {
+            if (currentTurnPlayer == currentPlayer.Player1)
+            {
+                animationController.PlayerTurn("Player1");
+                 
+            }
+            
+            if(currentTurnPlayer == currentPlayer.Player2)
+            {
+                animationController.PlayerTurn("Player2");
+
+            }
+
+                
+
+          }
     }
 }

@@ -13,6 +13,7 @@ namespace ddr.RockPaperScissor.versusAI
 
                     gameplayController = GetComponent<GameplayController>();
                     animationController = GetComponent<AnimationController>();
+                    
         }
         
         public void GetChoice(){
