@@ -62,7 +62,7 @@ namespace ddr.RockPaperScissor.versusAI
 
         private void Awake()
         {
-
+        
             animationController = GetComponent<AnimationController>();
             playerData = GetComponent<PlayerData>();
             gameplayUIs = GetComponent<GameplayUIs>();
@@ -86,7 +86,7 @@ namespace ddr.RockPaperScissor.versusAI
             InstantiateHealth();
             SetOpponentChoice();
             playerData.playerStreakCount = 0;
-
+            
 
 
         }
@@ -198,9 +198,20 @@ namespace ddr.RockPaperScissor.versusAI
                 result_Info_text.text = playerData.playerName + " Win!";
                 animationController.ResultOverlay();
                 playerData.Win();
+                streakingCount = playerData.ReturnCurrentStreak();
+                StartCoroutine(CheckStreaking());
                 StartCoroutine(ContinuePlay());
                 return;
             }
+        }
+        
+        IEnumerator CheckStreaking()
+        {
+            if(streakingCount >=3 && player_picked != opponent_picked){
+                animationController.ShowStreakAnimation(streakingCount.ToString());
+            }
+            
+            yield return new WaitForSeconds(1f);
         }
 
         IEnumerator GameOver(){
@@ -212,28 +223,17 @@ namespace ddr.RockPaperScissor.versusAI
         }
         IEnumerator ContinuePlay()
         {
-
             gameplayUIs.UpdateUIText();
-            if(playerData.playerStreakCount >=3 && player_picked != opponent_picked )
-                {
-                    StartCoroutine(Streak());       
-                }
-                
             // can Execute code for Scoring
-            
             yield return new WaitForSeconds(1.5f);
             animationController.ResetAnimation();
             yield return new WaitForSeconds(1f);
             SetOpponentChoice();
+            StopAllCoroutines();
         }
         void Update()
         {
             streakingCount = playerData.playerStreakCount;
-        }
-        IEnumerator Streak(){
-            animationController.ShowStreakAnimation(streakingCount.ToString()+"!");
-            yield return new WaitForSeconds(3f);
-            StopAllCoroutines();
         }
 
         public void GameFinished()
