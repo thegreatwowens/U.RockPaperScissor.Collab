@@ -23,7 +23,7 @@ namespace ddr.RockPaperScissor.UI
                     if(streakText != null)
                     streakText.text = "Streak Count: "+ playerData.playerStreakCount;
                     if(playerName !=null)
-                    playerName.text = "Your Name: "+ playerData.playerName;
+                    playerName.text =playerData.playerName;
                     if(ContinueScore !=null)
                     ContinueScore.text ="Your Score: "+playerData.Score();
                     if(leaderboardName !=null)

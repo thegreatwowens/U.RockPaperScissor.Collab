@@ -18,16 +18,20 @@ namespace ddr.RockPaperScissor.UI
         # endregion
         int numberOfRounds;
         string _playerName1,_playerName2;
+        
+        private int P1Score {get;set;}
+        private int P2Score {get;set;}
 
       public void SliderValueChanged(){
          sliderText.text = ""+slider.value;
+          numberOfRounds = ((int)slider.value);
       }
-      public string playerOne(){
+      public string playerOneName(){
             _playerName1 = playerName1.text;
 
         return _playerName1;
       }
-      public string playerTwo(){
+      public string playerTwoName(){
 
             _playerName2 = playerName2.text;
 
@@ -37,8 +41,12 @@ namespace ddr.RockPaperScissor.UI
 
         return numberOfRounds;
       }
+        public int P1ScoreData(){
+            return P1Score;
+        }
+         public int P2ScoreData(){
+            return P2Score;
+        }
 
-
-    
     }
 }

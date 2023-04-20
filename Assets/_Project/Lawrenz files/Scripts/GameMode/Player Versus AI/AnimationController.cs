@@ -10,9 +10,9 @@ namespace ddr.RockPaperScissor.versusAI
       PlayerData playerData;
       [SerializeField]
       GameObject instruction,handlerChoices,opponentPicked,playerPicked,playerdataHandler,
-                resultHandlerText,optionButton,showOptionHandler,GameDoneHandler,PlayerTurnHandler;
+                resultHandlerText,optionButton,showOptionHandler,GameDoneHandler;
       [SerializeField]
-      CanvasGroup choicesHandlerCanvas,BackgroundGameDoneHandler,BackgroundOverlayOption;
+      CanvasGroup choicesHandlerCanvas,BackgroundGameDoneHandler,BackgroundOverlayOption,PlayerTurnHandler;
       [Header("WinningStreak Instantiation")]
       [SerializeField]
       GameObject streakingParentObj;
@@ -27,8 +27,10 @@ namespace ddr.RockPaperScissor.versusAI
                  LeanTween.moveLocalY(playerPicked,-825.5f,1f).setEase(LeanTweenType.easeOutQuart);
                  LeanTween.moveLocalY(opponentPicked,825.5f,1f).setEase(LeanTweenType.easeOutQuart);
                  LeanTween.scale(resultHandlerText,new Vector3(0,0,0),1f).setEase(LeanTweenType.easeOutExpo);
-                 LeanTween.scale(playerdataHandler,new Vector3(1,1,1),1f).setEase(LeanTweenType.easeOutExpo);
-                 LeanTween.scale(optionButton,new Vector3(1,1,1),.1f);      
+                 LeanTween.scale(playerdataHandler,new Vector3(1,1,1),1f).setEase(LeanTweenType.easeOutExpo).setOnComplete(ShowTurn);
+                 LeanTween.scale(optionButton,new Vector3(1,1,1),.1f);
+                     
+                 
 
       }
 
@@ -38,7 +40,6 @@ namespace ddr.RockPaperScissor.versusAI
               LeanTween.scale(playerdataHandler,new Vector3(1,1,1),1f).setDelay(.8f).setEase(LeanTweenType.easeInOutQuart).setOnComplete(ShowTurn);
               LeanTween.scale(optionButton,new Vector3(1,1,1),.1f);
               
-
       }
             private void ShowPlayerTurn(){
               
@@ -80,12 +81,12 @@ namespace ddr.RockPaperScissor.versusAI
                 CanInteractChoices();
            }
      public void PlayerPicked(){
-
+                   HideTurnOverlay();
                    DisableInteractChoices();
                   LeanTween.scale(handlerChoices,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeInElastic);
                   LeanTween.scale(playerdataHandler,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeOutQuart);
                   LeanTween.scale(optionButton,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeOutQuart);
-            HideTurnOverlay();
+           
      }
     public void DisableInteractChoices(){
               choicesHandlerCanvas.interactable = false;
@@ -187,19 +188,26 @@ namespace ddr.RockPaperScissor.versusAI
 
         public void ShowTurn()
         {
-            LeanTween.scale(PlayerTurnHandler, new Vector3(.8f, .8f, .8f), .5f)
-                .setDelay(.5f).setOnComplete(FinalTurnPos);
+            if(LeanTween.isPaused(PlayerTurnHandler.gameObject)){
+                   LeanTween.resume(PlayerTurnHandler.gameObject);
+            }
+            else{
+             LeanTween.alphaCanvas(PlayerTurnHandler,1,1).setEase(LeanTweenType.easeInOutQuad).setLoopPingPong();
+            }
+           
         }
         public void FinalTurnPos()
         {
-            LeanTween.scale(PlayerTurnHandler, new Vector3(1,1,1), 1f).setLoopPingPong();
+          
+          LeanTween.alphaCanvas(PlayerTurnHandler,0,1).setEase(LeanTweenType.easeInOutQuad);
 
         }
         public void HideTurnOverlay()
         {
-            LeanTween.cancel(PlayerTurnHandler);
+           LeanTween.pause(PlayerTurnHandler.gameObject);
+           LeanTween.alphaCanvas(PlayerTurnHandler,0,0.1f);
+        
         }
-
 
     }
       
