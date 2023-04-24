@@ -18,6 +18,8 @@ namespace ddr.RockPaperScissor.PVP
         [SerializeField]
         RectTransform WinnerOverlay;
         [SerializeField]
+        GameObject RoundsHandler;
+        [SerializeField]
         CanvasGroup gamesettingBackOverlay;
         [Header("Player 1 Objects")]
         [SerializeField]
@@ -57,6 +59,14 @@ namespace ddr.RockPaperScissor.PVP
                     HideGameSettings();
                                       
         }
+        public void ShowRounds(){
+                    LeanTween.scale(RoundsHandler,new Vector3(1,1,1),1).setEase(LeanTweenType.easeInOutBounce);
+        }
+        public void HideRounds(){
+                     LeanTween.scale(RoundsHandler,new Vector3(0,0,0),1).setEase(LeanTweenType.easeOutExpo);
+
+
+        }
         public void ShowChoicesHandler(){
                     LeanTween.move(P1ChoiceHandler,new Vector2(0,160), 1f).setDelay(1).setEase(LeanTweenType.easeInOutExpo).setOnComplete(ShowPlayer1Data);
                     LeanTween.move(P2ChoiceHandler,new Vector2(0,-160), 1f).setDelay(1.6f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(ShowPlayer2Data);
@@ -64,8 +74,7 @@ namespace ddr.RockPaperScissor.PVP
         public void EnableChoiceshandler(){
                     ChoicesInteractable("Both",false);
                     LeanTween.scale(P1ChoiceHandler,new Vector3(1,1,1),1f).setDelay(1f).setEase(LeanTweenType.easeOutElastic);
-                    LeanTween.scale(P2ChoiceHandler,new Vector3(1,1,1),1f).setDelay(1.7f).setEase(LeanTweenType.easeOutElastic).setOnComplete(ShowPlayerData);
-                    
+                    LeanTween.scale(P2ChoiceHandler,new Vector3(1,1,1),1f).setDelay(1.7f).setEase(LeanTweenType.easeOutElastic).setOnComplete(ShowPlayerData);                   
         }
         public void PickedResultHandler(){
                 LeanTween.move(PickedPlayer1, new Vector2(0,150f), 1f).setDelay(2f).setEase(LeanTweenType.easeInOutExpo);
@@ -95,6 +104,7 @@ namespace ddr.RockPaperScissor.PVP
 
         }        
         public void EnablePlayer1Data(){
+                    
                     LeanTween.scale(P1Data,new Vector3(1,1,1),1).setEase(LeanTweenType.easeOutQuad);
          }  
           public void HidePlayer1Data(){
@@ -125,25 +135,28 @@ namespace ddr.RockPaperScissor.PVP
                                 canvasP2.blocksRaycasts = value;
                                 canvasP1.interactable = value;
                                 canvasP1.blocksRaycasts = value;
+                                
                     }
         }
         public void ShowTurnOverlay(string Name,string Player, bool value){
-                TextMeshProUGUI text = PlayerTurnOverlay.transform.GetComponentInChildren<TextMeshProUGUI>();
-                    text.text = Name+" Turn!";
-                LeanTween.move(PlayerTurnOverlay,new Vector2(0,0),2f).setEase(LeanTweenType.easeInOutElastic).setOnComplete(HideTurnOverlay);        
-                if(Player == "Player2"){
-                    LeanTween.scale(PlayerTurnOverlay,new Vector3(-1,-1,1),.1f);
+                TextMeshProUGUI text = PlayerTurnOverlay.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                    text.text = Name.ToUpper();
+                     
+                if(!LeanTween.isTweening(PlayerTurnOverlay)){
+                            LeanTween.scale(PlayerTurnOverlay,new Vector3(2.0f,2.0f,2.0f),1f).setDelay(.8f).setEase(LeanTweenType.easeInOutElastic).setOnComplete(HideTurnOverlay);  
+                            StartCoroutine(Interactables(Player,value));
                 }
-                StartCoroutine(Interactables(Player,value));
+
+                
         }
         private IEnumerator Interactables(string Player, bool value){
 
             yield return new WaitForSeconds(2f);
             ChoicesInteractable(Player,value);
+            
         }
         public void HideTurnOverlay(){
-            LeanTween.move(PlayerTurnOverlay,new Vector2(-400,0),.5f).setDelay(.5f).setEase(LeanTweenType.easeInBack); 
-            LeanTween.scale(PlayerTurnOverlay,new Vector3(1,1,1),.1f);
+            LeanTween.scale(PlayerTurnOverlay,new Vector3(0,0,0),.1f).setEase(LeanTweenType.easeInBack).setOnComplete(ShowRounds);
         }
 
         public void CallForPlayerOneTurn(){

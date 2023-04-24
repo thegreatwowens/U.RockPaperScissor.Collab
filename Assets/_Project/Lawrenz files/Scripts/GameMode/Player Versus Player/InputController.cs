@@ -22,7 +22,8 @@ namespace ddr.RockPaperScissor.PVP
         PlayerTwoTurn,
         ResultChoices,
         DecideGame,
-        GameReset
+        NextRound,
+        GameOver
 
     }
     public class InputController : MonoBehaviour
@@ -90,9 +91,13 @@ namespace ddr.RockPaperScissor.PVP
                         gameplayController.HandleDecideGame();
 
                     break;
-                case GameState.GameReset:
+                case GameState.NextRound:
                                 gameplayController.HandleGameReset();
                     break;
+               case GameState.GameOver: 
+                                gameplayController.HandleGameOver();
+                                
+                        break;
 
             }
             OnGameStateChanged?.Invoke(newState);

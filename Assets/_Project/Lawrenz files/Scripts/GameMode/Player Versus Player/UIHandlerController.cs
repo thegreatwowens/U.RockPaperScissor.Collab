@@ -38,12 +38,7 @@ namespace ddr.RockPaperScissor.PVP
                     PlayerOneScore.text ="Score: "+pvPGameSetting.P1ScoreData().ToString("0");
                     PlayerTwoScore.text ="Score: "+pvPGameSetting.P2ScoreData().ToString("0");
                     
-                    // Updates rounds
-                   // RoundsLeft.text = "Round "+gameplayController.returnRoundleft()+" of "+
-                    //pvPGameSetting.NumberofRounds();
-                    //Updates Score
-                 //   PlayerOneScore.text =""+ gameplayController.returnPlayerOneScore();
-                   // PlayerTwoScore.text =""+ gameplayController.returnPlayerTwoScore();
+                   
             }
 
 

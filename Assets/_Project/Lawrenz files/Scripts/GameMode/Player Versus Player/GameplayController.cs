@@ -19,7 +19,7 @@ namespace ddr.RockPaperScissor.PVP
         PvPGameSetting pvPGameSetting;
         [SerializeField]
         UIHandlerController uIHandlerController;
-        //UI Referencesddddddddddddddddddddddd
+        //UI References
         //variables
         int playerOneScore;
         int playerTwoScore;
@@ -80,6 +80,8 @@ namespace ddr.RockPaperScissor.PVP
             || playerOnePicked == HandChoicesPVP.Scissor && playerTwoPicked == HandChoicesPVP.Rock || playerOnePicked == HandChoicesPVP.Rock && playerTwoPicked == HandChoicesPVP.Paper)
             {
                 animationController.ShowWinner(pvPGameSetting.playerTwoName() +" Win!");
+                PvPScoring.ScoreDistribution(PvPScoring.Player.PlayerTwo);
+                uIHandlerController.UpdateUI();
                 StartCoroutine(GameReset());
                 return;
             }
@@ -88,6 +90,8 @@ namespace ddr.RockPaperScissor.PVP
              playerOnePicked == HandChoicesPVP.Rock && playerTwoPicked == HandChoicesPVP.Scissor || playerOnePicked == HandChoicesPVP.Scissor && playerTwoPicked == HandChoicesPVP.Paper)
             {
                 animationController.ShowWinner(pvPGameSetting.playerOneName() +" Win!");
+                PvPScoring.ScoreDistribution(PvPScoring.Player.PlayerOne);
+                uIHandlerController.UpdateUI();
                 StartCoroutine(GameReset());
                 return;
             }
@@ -107,6 +111,7 @@ namespace ddr.RockPaperScissor.PVP
                         playerOnePicked = HandChoicesPVP.Paper;
                         animationController.ChoicesInteractable("Player1", false);
                         animationController.HidePlayerChoicesPlayerOne();
+                       
                         InputController.Instance.UpdateGameState(GameState.PlayerTwoTurn);
                     }
 
@@ -116,6 +121,7 @@ namespace ddr.RockPaperScissor.PVP
                         playerTwoPicked = HandChoicesPVP.Paper;
                         animationController.ChoicesInteractable("Player2", false);
                         animationController.HidePlayerChoicesPlayerTwo();
+                         animationController.HideRounds();
                         InputController.Instance.UpdateGameState(GameState.ResultChoices);
                     }
                     break;
@@ -135,6 +141,7 @@ namespace ddr.RockPaperScissor.PVP
                         playerTwoPicked = HandChoicesPVP.Rock;
                         animationController.ChoicesInteractable("Player2", false);
                         animationController.HidePlayerChoicesPlayerTwo();
+                         animationController.HideRounds();
                         InputController.Instance.UpdateGameState(GameState.ResultChoices);
                     }
                     break;
@@ -154,6 +161,7 @@ namespace ddr.RockPaperScissor.PVP
                         playerTwoPicked = HandChoicesPVP.Scissor;
                         animationController.ChoicesInteractable("Player2", false);
                         animationController.HidePlayerChoicesPlayerTwo();
+                         animationController.HideRounds();
                         InputController.Instance.UpdateGameState(GameState.ResultChoices);
                     }
                     break;
@@ -195,10 +203,18 @@ namespace ddr.RockPaperScissor.PVP
 
         }
         IEnumerator GameReset(){
-
+                PvPScoring.RoundsManager();
             yield return new WaitForSeconds(1.5f);
-            InputController.Instance.UpdateGameState(GameState.GameReset);
+          
          
+        }
+
+        internal void HandleGameOver()
+        {
+        // ANIMATIONS
+
+
+
         }
     }
 }
