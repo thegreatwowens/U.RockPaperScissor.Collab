@@ -12,55 +12,55 @@ namespace ddr.RockPaperScissor.PVP
         GameplayController gameplayController;
         [Header("UIs")]
         [SerializeField]
-        GameObject gameSettingHandler;
+        RectTransform gameSettingHandler;
         [SerializeField]
-        GameObject PlayerTurnOverlay;
+        RectTransform PlayerTurnOverlay;
         [SerializeField]
-        GameObject WinnerOverlay;
+        RectTransform WinnerOverlay;
         [SerializeField]
         CanvasGroup gamesettingBackOverlay;
         [Header("Player 1 Objects")]
         [SerializeField]
-        GameObject PickedPlayer1;
+        RectTransform PickedPlayer1;
         [SerializeField]
-        GameObject P1Data;
+         RectTransform P1Data;
         [SerializeField]
-        GameObject P1ChoiceHandler;
+         RectTransform P1ChoiceHandler;
         [SerializeField]
         CanvasGroup canvasP1;
          [Header("Player 2 Objects")]
          [SerializeField]
-         GameObject PickedPlayer2;
+         RectTransform PickedPlayer2;
         [SerializeField]
-        GameObject P2Data;
+        RectTransform P2Data;
         [SerializeField]
-         GameObject P2ChoiceHandler;
+        RectTransform P2ChoiceHandler;
          [SerializeField]
         CanvasGroup canvasP2;
         [HideInInspector]
         public bool _animationDone;
     #endregion
         public void ShowGameSettings(){
+            CanvasGroup panel = gameSettingHandler.GetComponent<CanvasGroup>();
+                panel.interactable =true;
             LeanTween.alphaCanvas(gamesettingBackOverlay,1,.7f);
             LeanTween.scale(gameSettingHandler,new Vector3(1,1,1),1).setDelay(1f).setEase(LeanTweenType.easeOutElastic);
          }
         public void HideGameSettings(){
+                CanvasGroup panel = gameSettingHandler.GetComponent<CanvasGroup>();
+                panel.interactable =false;
                 LeanTween.scale(gameSettingHandler,new Vector3(0,0,0),1).setEase(LeanTweenType.easeInElastic);
                 LeanTween.alphaCanvas(gamesettingBackOverlay,0,.7f).setDelay(1.3f);
+                
         }
         public void GameStart(){
                     HideGameSettings();
                                       
         }
         public void ShowChoicesHandler(){
-                    LeanTween.moveLocalY(P1ChoiceHandler, -215f, 1f).setDelay(1).setEase(LeanTweenType.easeInOutExpo).setOnComplete(ShowPlayer1Data);
-                    LeanTween.moveLocalY(P2ChoiceHandler,215f, 1f).setDelay(1.6f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(ShowPlayer2Data);
+                    LeanTween.move(P1ChoiceHandler,new Vector2(0,160), 1f).setDelay(1).setEase(LeanTweenType.easeInOutExpo).setOnComplete(ShowPlayer1Data);
+                    LeanTween.move(P2ChoiceHandler,new Vector2(0,-160), 1f).setDelay(1.6f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(ShowPlayer2Data);
         }
-         public void HideChoicesHandler(){
-                    LeanTween.moveLocalY(P1ChoiceHandler, -600f, 1f).setEase(LeanTweenType.easeInOutExpo);
-                    LeanTween.moveLocalY(P2ChoiceHandler,600f, 1f).setEase(LeanTweenType.easeInOutExpo);
-        }
-
         public void EnableChoiceshandler(){
                     ChoicesInteractable("Both",false);
                     LeanTween.scale(P1ChoiceHandler,new Vector3(1,1,1),1f).setDelay(1f).setEase(LeanTweenType.easeOutElastic);
@@ -68,12 +68,12 @@ namespace ddr.RockPaperScissor.PVP
                     
         }
         public void PickedResultHandler(){
-                LeanTween.moveLocalY(PickedPlayer1, -100f, 1f).setDelay(2f).setEase(LeanTweenType.easeInOutExpo);
-                LeanTween.moveLocalY(PickedPlayer2,100f, 1f).setDelay(2f).setEase(LeanTweenType.easeInOutExpo);
+                LeanTween.move(PickedPlayer1, new Vector2(0,150f), 1f).setDelay(2f).setEase(LeanTweenType.easeInOutExpo);
+                LeanTween.move(PickedPlayer2,new Vector2(0,-150f), 1f).setDelay(2f).setEase(LeanTweenType.easeInOutExpo);
         }
          public void HidePickedResultHandler(){
-                LeanTween.moveLocalY(PickedPlayer1, -600f, 1f).setDelay(1f).setEase(LeanTweenType.easeInOutExpo);
-                LeanTween.moveLocalY(PickedPlayer2,600f, 1f).setDelay(1f).setEase(LeanTweenType.easeInOutExpo);
+                LeanTween.move(PickedPlayer1,new Vector2(0,-300), 1f).setDelay(1f).setEase(LeanTweenType.easeInOutExpo);
+                LeanTween.move(PickedPlayer2,new Vector2(0,300), 1f).setDelay(1f).setEase(LeanTweenType.easeInOutExpo);
         }
 
         public void ShowWinner(string name){
@@ -98,16 +98,16 @@ namespace ddr.RockPaperScissor.PVP
                     LeanTween.scale(P1Data,new Vector3(1,1,1),1).setEase(LeanTweenType.easeOutQuad);
          }  
           public void HidePlayer1Data(){
-                    LeanTween.moveLocalY(P1Data, -600f, .6f).setEase(LeanTweenType.easeInOutExpo);
+                    LeanTween.move(P1Data,new Vector2(0,-200f), .6f).setEase(LeanTweenType.easeInOutExpo);
          } 
           public void HidePlayer2Data(){
-                    LeanTween.moveLocalY(P2Data, 600f, .6f).setEase(LeanTweenType.easeInOutExpo);
+                    LeanTween.move(P2Data, new Vector2(0,215f), .6f).setEase(LeanTweenType.easeInOutExpo);
          }  
            public void ShowPlayer1Data(){
-                LeanTween.moveLocalY(P1Data, -300f, 1f).setEase(LeanTweenType.easeInOutExpo);
+                LeanTween.move(P1Data,new Vector2(0,104f), 1f).setEase(LeanTweenType.easeInOutExpo);
            }
            public void ShowPlayer2Data(){
-                 LeanTween.moveLocalY(P2Data, 300f, 1f).setEase(LeanTweenType.easeInOutExpo);
+                 LeanTween.move(P2Data,new Vector2(0,-104), 1f).setEase(LeanTweenType.easeInOutExpo);
            }
                
         public void ChoicesInteractable(string player,bool value){
@@ -130,7 +130,7 @@ namespace ddr.RockPaperScissor.PVP
         public void ShowTurnOverlay(string Name,string Player, bool value){
                 TextMeshProUGUI text = PlayerTurnOverlay.transform.GetComponentInChildren<TextMeshProUGUI>();
                     text.text = Name+" Turn!";
-                LeanTween.moveLocalX(PlayerTurnOverlay,0,2f).setEase(LeanTweenType.easeInOutElastic).setOnComplete(HideTurnOverlay);        
+                LeanTween.move(PlayerTurnOverlay,new Vector2(0,0),2f).setEase(LeanTweenType.easeInOutElastic).setOnComplete(HideTurnOverlay);        
                 if(Player == "Player2"){
                     LeanTween.scale(PlayerTurnOverlay,new Vector3(-1,-1,1),.1f);
                 }
@@ -142,7 +142,7 @@ namespace ddr.RockPaperScissor.PVP
             ChoicesInteractable(Player,value);
         }
         public void HideTurnOverlay(){
-            LeanTween.moveLocalX(PlayerTurnOverlay,400,.5f).setDelay(.5f).setEase(LeanTweenType.easeInBack); 
+            LeanTween.move(PlayerTurnOverlay,new Vector2(-400,0),.5f).setDelay(.5f).setEase(LeanTweenType.easeInBack); 
             LeanTween.scale(PlayerTurnOverlay,new Vector3(1,1,1),.1f);
         }
 
@@ -154,13 +154,13 @@ namespace ddr.RockPaperScissor.PVP
         }
         public void HidePlayerChoicesPlayerOne()
         {
-            LeanTween.moveLocalY(P1ChoiceHandler, -600f, 1f).setEase(LeanTweenType.easeInOutExpo);
+            LeanTween.move(P1ChoiceHandler,new Vector2(0,-300f), 1f).setEase(LeanTweenType.easeInOutExpo);
             HidePlayer1Data();
         }
         public void HidePlayerChoicesPlayerTwo()
 
         {
-            LeanTween.moveLocalY(P2ChoiceHandler, 600f, 1f).setEase(LeanTweenType.easeInOutExpo);
+            LeanTween.move(P2ChoiceHandler,new Vector2(0,300f), 1f).setEase(LeanTweenType.easeInOutExpo);
             HidePlayer2Data();
         }
           public void ResetAnimation(){

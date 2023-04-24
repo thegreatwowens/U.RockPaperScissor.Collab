@@ -79,7 +79,7 @@ namespace ddr.RockPaperScissor.PVP
             if (playerOnePicked == HandChoicesPVP.Paper && playerTwoPicked == HandChoicesPVP.Scissor
             || playerOnePicked == HandChoicesPVP.Scissor && playerTwoPicked == HandChoicesPVP.Rock || playerOnePicked == HandChoicesPVP.Rock && playerTwoPicked == HandChoicesPVP.Paper)
             {
-                animationController.ShowWinner(pvPGameSetting.playerOneName() +" Win!");
+                animationController.ShowWinner(pvPGameSetting.playerTwoName() +" Win!");
                 StartCoroutine(GameReset());
                 return;
             }
@@ -87,7 +87,7 @@ namespace ddr.RockPaperScissor.PVP
             if (playerOnePicked == HandChoicesPVP.Paper && playerTwoPicked == HandChoicesPVP.Rock ||
              playerOnePicked == HandChoicesPVP.Rock && playerTwoPicked == HandChoicesPVP.Scissor || playerOnePicked == HandChoicesPVP.Scissor && playerTwoPicked == HandChoicesPVP.Paper)
             {
-                animationController.ShowWinner(pvPGameSetting.playerTwoName() +" Win!");
+                animationController.ShowWinner(pvPGameSetting.playerOneName() +" Win!");
                 StartCoroutine(GameReset());
                 return;
             }
