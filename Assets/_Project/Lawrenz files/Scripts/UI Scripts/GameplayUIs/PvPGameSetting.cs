@@ -4,8 +4,15 @@ using TMPro;
 using ddr.RockPaperScissor.PVP;
 namespace ddr.RockPaperScissor.UI
 {
+         public enum Player {
+            None,
+            PlayerOne,
+            PlayerTwo
+        }
     public class PvPGameSetting : MonoBehaviour
     {
+       
+  
         // Variables
         #region  UI Variables
 
@@ -16,17 +23,21 @@ namespace ddr.RockPaperScissor.UI
       [SerializeField]
       TextMeshProUGUI sliderText;
         # endregion
-        public static int numberOfRounds;
+        public int bestOfRounds = 1;
         string _playerName1,_playerName2;
         
         private int P1Score {get;set;}
         private int P2Score {get;set;}
-
+        
+        void Start()
+        {
+            slider.value = 1;
+            bestOfRounds = 1;
+        }
       public void SliderValueChanged(){
          sliderText.text = ""+slider.value;
-          numberOfRounds = ((int)slider.value);
+          bestOfRounds = ((int)slider.value);
       }
-    
       public string playerOneName(){
             _playerName1 = playerName1.text;
 
@@ -38,81 +49,43 @@ namespace ddr.RockPaperScissor.UI
 
         return _playerName2;
       }
-      public int NumberofRounds(){
 
-        return numberOfRounds;
-      }
         public int P1ScoreData(){
-          
-            return PvPScoring.ReturnCurrentPlayerScore(PvPScoring.Player.PlayerOne);
+        
+            return P1Score;
         }
          public int P2ScoreData(){
-            return PvPScoring.ReturnCurrentPlayerScore(PvPScoring.Player.PlayerTwo);
+           
+            return P2Score;
         }
+        
+        public void  ScoreDistribution(Player player){
+                switch(player){
+                        case Player.PlayerOne:
+                                    P1Score++;
+                                break;
+
+                        case Player.PlayerTwo:
+                                    P1Score++;
+                                break;
+
+                }
+
+        }
+        public void ResetScore(){
+                    P1Score = 0;
+                    P2Score = 0;
+        }
+
 
     }
 
 
-    public class PvPScoring :PvPGameSetting {
+    public class PvPScoring :MonoBehaviour {
 
       
-         public enum Player {
+     
 
-            None,
-            PlayerOne,
-            PlayerTwo
-
-        }
-  
-        
-        private  static int PlayerOneScore {get; set;}
-        private  static int PlayerTwoScore {get; set;}
-        private static int Rounds {get; set;}
-        public  static void ScoreDistribution(Player player){
-                  switch (player)
-                  {
-                      case Player.PlayerOne:
-
-                            PlayerOneScore ++;
-                      break; 
-
-                      case Player.PlayerTwo:
-                            PlayerTwoScore++;
-                      break; 
-
-                  }
-            
-        }
-
-        public static void RoundsManager(){
-
-              if(numberOfRounds !=0){
-                    InputController.Instance.UpdateGameState(GameState.NextRound);
-                    return;
-              }
-              else{
-                      // do something for GameOVer
-              }
-
-        }
-
-        public static int ReturnCurrentPlayerScore(Player player){
-              int valueReturn = 0;
-              if(player == Player.PlayerOne){
-
-                  valueReturn  = PlayerOneScore;
-
-              }
-              
-              if (player == Player.PlayerOne){
-
-                  valueReturn  = PlayerTwoScore;
-              }
-
-              return valueReturn;
-              
-        
-        }
 
     }
 }

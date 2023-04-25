@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/_Project/Scenes/Main Menu.unity
+    guid: 731bf2ac2aade6d4fb946c644f691280
   - enabled: 1
     path: Assets/_Project/Scenes/GameScreen PlayerVersusAI.unity
     guid: d75658d20b2d03241a92acd90c6106aa

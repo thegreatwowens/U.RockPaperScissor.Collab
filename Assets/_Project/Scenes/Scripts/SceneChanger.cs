@@ -15,6 +15,7 @@ public class SceneChanger : MonoBehaviour
     private int indexScene;
     public static SceneChanger instance;
 
+    Scene currentScene;
     void Awake()
     {
         if(instance !=null && instance != this){
@@ -29,7 +30,13 @@ public class SceneChanger : MonoBehaviour
            
 
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1){
-
+            currentScene = SceneManager.GetActiveScene();
+                    if(currentScene.buildIndex == 0){
+                        SoundManager.Instance.PlayMusic("MainMenuMusic");
+                    }
+                    if(currentScene.buildIndex == 1){
+                         SoundManager.Instance.PlayMusic("PVAIMusic");
+                    }
                     FadeFromPreviousScene();
         }
     public void FadeToNextScene(int Index){

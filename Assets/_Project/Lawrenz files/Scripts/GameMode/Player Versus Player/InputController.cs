@@ -16,15 +16,15 @@ namespace ddr.RockPaperScissor.PVP
     public enum GameState
     {
         GameStart,
-        ShowChoicesOverlay,
+        ShowPlayersChoices,
         TurnOverlay,
         PlayerOneTurn,
         PlayerTwoTurn,
-        ResultChoices,
-        DecideGame,
+        HandsResult,
+        JudgeWinner,
+        CheckScores,
         NextRound,
         GameOver
-
     }
     public class InputController : MonoBehaviour
     {
@@ -70,30 +70,35 @@ namespace ddr.RockPaperScissor.PVP
             switch (newState)
             {
                 case GameState.GameStart:
-                    gameplayController.StartGame();
+                    gameplayController.GameStart();
                     
                     break;
                 case GameState.PlayerOneTurn:
                     gameplayController.HandlePlayerTurnOne();
                     
                     break;
-                case GameState.ShowChoicesOverlay:
-                        gameplayController.ShowChoices();
-                        break;
-
                 case GameState.PlayerTwoTurn:
                      gameplayController.HandlePlayerTurnTwo();
-                    break;
-                case GameState.ResultChoices:
-                        gameplayController.ResultChoices();
+                    break;    
+
+                case GameState.ShowPlayersChoices:
+                        gameplayController.HandleShowPlayerChoices();
+                        break;
+
+                case GameState.HandsResult:
+                        gameplayController.HandlePlayerPickedHandsResult();
                      break;
-                case GameState.DecideGame:
-                        gameplayController.HandleDecideGame();
+                case GameState.JudgeWinner:
+                        gameplayController.HandleJudgeRoundWinner();
 
                     break;
-                case GameState.NextRound:
-                                gameplayController.HandleGameReset();
+                case GameState.CheckScores:
+                                gameplayController.HandleCheckScores();
                     break;
+                 case GameState.NextRound:
+                                gameplayController.HandleNextRound();
+                    break;
+
                case GameState.GameOver: 
                                 gameplayController.HandleGameOver();
                                 

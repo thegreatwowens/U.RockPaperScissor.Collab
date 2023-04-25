@@ -79,6 +79,7 @@ namespace ddr.RockPaperScissor.versusAI
 
         public void GameStart()
         {
+            SoundManager.Instance.PlaySoundFx("UIClicked");
             playerHealth = 2;
             animationController.HideInstruction();
             animationController.GameStart();
@@ -251,11 +252,13 @@ namespace ddr.RockPaperScissor.versusAI
         public void ClickedOption()
         {
             animationController.ShowOption();
+            SoundManager.Instance.PlaySoundFx("UIClicked");
         }
         public void TryAgain()
         {
             animationController.HideGameCompletedWindow();
         }
+
 
     }
 

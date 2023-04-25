@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 using ddr.RockPaperScissor.PlayerManager;
+using UnityEngine.UI;
+
 public class OptionScript : MonoBehaviour
 {
         [Header("For SceneChanger")]
@@ -9,6 +11,8 @@ public class OptionScript : MonoBehaviour
 
         public TMP_InputField nameInput;
         public UnityEvent executeSomething; 
+
+        public Slider slider;
         void Start()
         {
                 if(nameInput.text == null)
@@ -18,6 +22,13 @@ public class OptionScript : MonoBehaviour
                                 else
                                         PlayerPrefs.GetString("SavedPlayerName");
                         }
+
+                        slider.value = SoundManager.Instance.musicSource.volume;
+        }
+
+        public void VolumeChanged(){
+                SoundManager.Instance.VolumeSlider(slider.value);
+
         }
         public void ChangeScene(){
             

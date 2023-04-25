@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using ddr.RockPaperScissor.PlayerManager;
 using ddr.RockPaperScissor.versusAI;
+using UnityEngine.UI;
 namespace ddr.RockPaperScissor.UI
 {
     public class GameplayUIs : MonoBehaviour
@@ -12,10 +13,17 @@ namespace ddr.RockPaperScissor.UI
         [SerializeField]
         TextMeshProUGUI scoreText, streakText,playerName,ContinueScore,leaderboardName;
 
+        [SerializeField]
+        Slider sliderValue;
+
         private void Awake() {
             playerData = GetComponent<PlayerData>();
         }
         
+        void Start()
+        {
+            sliderValue.value = SoundManager.Instance.musicSource.volume;
+        }
         public void UpdateUIText(){
                     if(scoreText != null)
                     scoreText.text = "Score: "+ playerData.Score();
@@ -31,6 +39,10 @@ namespace ddr.RockPaperScissor.UI
 
                     
         }
+        public void OnSliderChange(){
+            SoundManager.Instance.VolumeSlider(sliderValue.value);
+        }
+    
 
 
 

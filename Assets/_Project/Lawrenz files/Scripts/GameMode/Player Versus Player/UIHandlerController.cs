@@ -33,10 +33,13 @@ namespace ddr.RockPaperScissor.PVP
             }
         
             public void UpdateUI(){
+                        
                     PlayerNameOne.text = pvPGameSetting.playerOneName();
                     PlayerNameTwo.text = pvPGameSetting.playerTwoName();
-                    PlayerOneScore.text ="Score: "+pvPGameSetting.P1ScoreData().ToString("0");
-                    PlayerTwoScore.text ="Score: "+pvPGameSetting.P2ScoreData().ToString("0");
+                    PlayerOneScore.text ="Score: "+pvPGameSetting.P1ScoreData().ToString();
+                    PlayerTwoScore.text ="Score: "+pvPGameSetting.P2ScoreData().ToString();
+                    RoundsLeft.text = "Round " +gameplayController.returnRound()+" Race to "+pvPGameSetting.bestOfRounds;
+                    
                     
                    
             }

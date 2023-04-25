@@ -6,8 +6,7 @@ namespace ddr.RockPaperScissor.PVP
 {
     public class AnimationController : MonoBehaviour
     {
-
-#region  Variables
+        #region  Variables
         [SerializeField]
         GameplayController gameplayController;
         [Header("UIs")]
@@ -21,167 +20,226 @@ namespace ddr.RockPaperScissor.PVP
         GameObject RoundsHandler;
         [SerializeField]
         CanvasGroup gamesettingBackOverlay;
+        [SerializeField]
+        RectTransform GameOverPanel;
+        [SerializeField]
+        CanvasGroup gameOverBackOverlay;
         [Header("Player 1 Objects")]
         [SerializeField]
         RectTransform PickedPlayer1;
         [SerializeField]
-         RectTransform P1Data;
+        RectTransform P1Data;
         [SerializeField]
-         RectTransform P1ChoiceHandler;
+        RectTransform P1ChoiceHandler;
         [SerializeField]
         CanvasGroup canvasP1;
-         [Header("Player 2 Objects")]
-         [SerializeField]
-         RectTransform PickedPlayer2;
+        [Header("Player 2 Objects")]
+        [SerializeField]
+        RectTransform PickedPlayer2;
         [SerializeField]
         RectTransform P2Data;
         [SerializeField]
         RectTransform P2ChoiceHandler;
-         [SerializeField]
+        [SerializeField]
         CanvasGroup canvasP2;
-        [HideInInspector]
-        public bool _animationDone;
-    #endregion
-        public void ShowGameSettings(){
+        #endregion
+        public void ShowGameSettings()
+        {
             CanvasGroup panel = gameSettingHandler.GetComponent<CanvasGroup>();
-                panel.interactable =true;
-            LeanTween.alphaCanvas(gamesettingBackOverlay,1,.7f);
-            LeanTween.scale(gameSettingHandler,new Vector3(1,1,1),1).setDelay(1f).setEase(LeanTweenType.easeOutElastic);
-         }
-        public void HideGameSettings(){
-                CanvasGroup panel = gameSettingHandler.GetComponent<CanvasGroup>();
-                panel.interactable =false;
-                LeanTween.scale(gameSettingHandler,new Vector3(0,0,0),1).setEase(LeanTweenType.easeInElastic);
-                LeanTween.alphaCanvas(gamesettingBackOverlay,0,.7f).setDelay(1.3f);
-                
+            panel.interactable = true;
+            LeanTween.alphaCanvas(gamesettingBackOverlay, 1, .7f);
+            LeanTween.scale(gameSettingHandler, new Vector3(1, 1, 1), 1).setDelay(1f).setEase(LeanTweenType.easeOutElastic);
         }
-        public void GameStart(){
-                    HideGameSettings();
-                                      
+        public void HideGameSettings()
+        {
+            CanvasGroup panel = gameSettingHandler.GetComponent<CanvasGroup>();
+            panel.interactable = false;
+            LeanTween.scale(gameSettingHandler, new Vector3(0, 0, 0), 1).setEase(LeanTweenType.easeInElastic);
+            LeanTween.alphaCanvas(gamesettingBackOverlay, 0, .7f).setDelay(1.3f);
+
         }
-        public void ShowRounds(){
-                    LeanTween.scale(RoundsHandler,new Vector3(1,1,1),1).setEase(LeanTweenType.easeInOutBounce);
+        public void GameStart()
+        {
+            HideGameSettings();
+
         }
-        public void HideRounds(){
-                     LeanTween.scale(RoundsHandler,new Vector3(0,0,0),1).setEase(LeanTweenType.easeOutExpo);
+        public void ShowRounds()
+        {   
+            LeanTween.scale(RoundsHandler, new Vector3(1, 1, 1), 1).setEase(LeanTweenType.easeInOutBounce).setOnComplete(RoundFlip);
+        }
+
+        private void RoundFlip(){
+                    LeanTween.scale(RoundsHandler, new Vector3(-1,-1, 1), 1).setOnComplete(HideRounds);
+        }
+        public void HideRounds()
+        {
+            LeanTween.scale(RoundsHandler, new Vector3(0, 0, 0), 1).setDelay(1f).setEase(LeanTweenType.easeInBounce);
 
 
         }
-        public void ShowChoicesHandler(){
-                    LeanTween.move(P1ChoiceHandler,new Vector2(0,160), 1f).setDelay(1).setEase(LeanTweenType.easeInOutExpo).setOnComplete(ShowPlayer1Data);
-                    LeanTween.move(P2ChoiceHandler,new Vector2(0,-160), 1f).setDelay(1.6f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(ShowPlayer2Data);
+        public void ShowChoicesHandler()
+        {
+            LeanTween.move(P1ChoiceHandler, new Vector2(0, 160), 1f).setDelay(1).setEase(LeanTweenType.easeInOutExpo).setOnComplete(ShowPlayer1Data);
+            LeanTween.move(P2ChoiceHandler, new Vector2(0, -160), 1f).setDelay(1.6f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(ShowPlayer2Data);
         }
-        public void EnableChoiceshandler(){
-                    ChoicesInteractable("Both",false);
-                    LeanTween.scale(P1ChoiceHandler,new Vector3(1,1,1),1f).setDelay(1f).setEase(LeanTweenType.easeOutElastic);
-                    LeanTween.scale(P2ChoiceHandler,new Vector3(1,1,1),1f).setDelay(1.7f).setEase(LeanTweenType.easeOutElastic).setOnComplete(ShowPlayerData);                   
+        public void EnableChoiceshandler()
+        {
+            ChoicesInteractable("Both", false);
+            LeanTween.scale(P1ChoiceHandler, new Vector3(1, 1, 1), 1f).setDelay(1f).setEase(LeanTweenType.easeOutElastic);
+            LeanTween.scale(P2ChoiceHandler, new Vector3(1, 1, 1), 1f).setDelay(1.7f).setEase(LeanTweenType.easeOutElastic).setOnComplete(ShowPlayerData);
         }
-        public void PickedResultHandler(){
-                LeanTween.move(PickedPlayer1, new Vector2(0,150f), 1f).setDelay(2f).setEase(LeanTweenType.easeInOutExpo);
-                LeanTween.move(PickedPlayer2,new Vector2(0,-150f), 1f).setDelay(2f).setEase(LeanTweenType.easeInOutExpo);
+        public void PickedResultHandler()
+        {
+            LeanTween.move(PickedPlayer1, new Vector2(0, 150f), 1f).setDelay(2f).setEase(LeanTweenType.easeInOutExpo);
+            LeanTween.move(PickedPlayer2, new Vector2(0, -150f), 1f).setDelay(2f).setEase(LeanTweenType.easeInOutExpo);
         }
-         public void HidePickedResultHandler(){
-                LeanTween.move(PickedPlayer1,new Vector2(0,-300), 1f).setDelay(1f).setEase(LeanTweenType.easeInOutExpo);
-                LeanTween.move(PickedPlayer2,new Vector2(0,300), 1f).setDelay(1f).setEase(LeanTweenType.easeInOutExpo);
+        public void HidePickedResultHandler()
+        {
+            LeanTween.move(PickedPlayer1, new Vector2(0, -300), 1f).setDelay(1f).setEase(LeanTweenType.easeInOutExpo);
+            LeanTween.move(PickedPlayer2, new Vector2(0, 300), 1f).setDelay(1f).setEase(LeanTweenType.easeInOutExpo);
         }
 
-        public void ShowWinner(string name){
-                    TextMeshProUGUI text = WinnerOverlay.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                        text.text = name;
-                    LeanTween.scale(WinnerOverlay,new Vector3(1,1,1),1f).setDelay(.8f).setEase(LeanTweenType.easeOutExpo).setOnComplete(HideWinner);
+        public void ShowWinner(string name)
+        {
+            TextMeshProUGUI text = WinnerOverlay.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            text.text = name;
+            LeanTween.scale(WinnerOverlay, new Vector3(1, 1, 1), 1f).setDelay(.8f).setEase(LeanTweenType.easeOutExpo).setOnComplete(HideWinner);
         }
-        private void HideWinner(){
-                LeanTween.scale(WinnerOverlay,new Vector3(0,0,0),.3f);
+        private void HideWinner()
+        {
+            LeanTween.scale(WinnerOverlay, new Vector3(0, 0, 0), .3f);
         }
-        public async void ShowPlayerData(){
+            public async void ShowPlayerData()
+        {
             await Task.Delay(500);
-                EnablePlayer1Data();
-                EnablePlayer2Data();
-                CallForPlayerOneTurn();
+            EnablePlayer1Data();
+            EnablePlayer2Data();
+            CallForPlayerOneTurn();
         }
-        public void EnablePlayer2Data(){
-                    LeanTween.scale(P2Data,new Vector3(1,1,1),1).setEase(LeanTweenType.easeOutQuad);
+        public void EnablePlayer2Data()
+        {
+            LeanTween.scale(P2Data, new Vector3(1, 1, 1), 1).setEase(LeanTweenType.easeOutQuad);
 
-        }        
-        public void EnablePlayer1Data(){
-                    
-                    LeanTween.scale(P1Data,new Vector3(1,1,1),1).setEase(LeanTweenType.easeOutQuad);
-         }  
-          public void HidePlayer1Data(){
-                    LeanTween.move(P1Data,new Vector2(0,-200f), .6f).setEase(LeanTweenType.easeInOutExpo);
-         } 
-          public void HidePlayer2Data(){
-                    LeanTween.move(P2Data, new Vector2(0,215f), .6f).setEase(LeanTweenType.easeInOutExpo);
-         }  
-           public void ShowPlayer1Data(){
-                LeanTween.move(P1Data,new Vector2(0,104f), 1f).setEase(LeanTweenType.easeInOutExpo);
-           }
-           public void ShowPlayer2Data(){
-                 LeanTween.move(P2Data,new Vector2(0,-104), 1f).setEase(LeanTweenType.easeInOutExpo);
-           }
-               
-        public void ChoicesInteractable(string player,bool value){
-                    if(player =="Player1"){
-                                canvasP1.interactable = value;
-                                canvasP1.blocksRaycasts = value;
-                    }
-                    
-                    if(player =="Player2"){
-                                canvasP2.interactable = value;
-                                canvasP2.blocksRaycasts = value;
-                    }
-                    if( player == "Both"){
-                                canvasP2.interactable = value;
-                                canvasP2.blocksRaycasts = value;
-                                canvasP1.interactable = value;
-                                canvasP1.blocksRaycasts = value;
-                                
-                    }
         }
-        public void ShowTurnOverlay(string Name,string Player, bool value){
-                TextMeshProUGUI text = PlayerTurnOverlay.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-                    text.text = Name.ToUpper();
-                     
-                if(!LeanTween.isTweening(PlayerTurnOverlay)){
-                            LeanTween.scale(PlayerTurnOverlay,new Vector3(2.0f,2.0f,2.0f),1f).setDelay(.8f).setEase(LeanTweenType.easeInOutElastic).setOnComplete(HideTurnOverlay);  
-                            StartCoroutine(Interactables(Player,value));
+        public void EnablePlayer1Data()
+        {
+
+            LeanTween.scale(P1Data, new Vector3(1, 1, 1), 1).setEase(LeanTweenType.easeOutQuad);
+        }
+        public void HidePlayer1Data()
+        {
+            LeanTween.move(P1Data, new Vector2(0, -200f), .6f).setEase(LeanTweenType.easeInOutExpo);
+        }
+        public void HidePlayer2Data()
+        {
+            LeanTween.move(P2Data, new Vector2(0, 215f), .6f).setEase(LeanTweenType.easeInOutExpo);
+        }
+        public void ShowPlayer1Data()
+        {
+            LeanTween.move(P1Data, new Vector2(0, 104f), 1f).setEase(LeanTweenType.easeInOutExpo);
+        }
+        public void ShowPlayer2Data()
+        {
+            LeanTween.move(P2Data, new Vector2(0, -104), 1f).setEase(LeanTweenType.easeInOutExpo);
+        }
+
+        public void ChoicesInteractable(string player, bool value)
+        {
+            if (player == "Player1")
+            {
+                canvasP1.interactable = value;
+                canvasP1.blocksRaycasts = value;
+            }
+
+            if (player == "Player2")
+            {
+                canvasP2.interactable = value;
+                canvasP2.blocksRaycasts = value;
+            }
+            if (player == "Both")
+            {
+                canvasP2.interactable = value;
+                canvasP2.blocksRaycasts = value;
+                canvasP1.interactable = value;
+                canvasP1.blocksRaycasts = value;
+
+            }
+        }
+        public void ShowTurnOverlay(string Name, string Player, bool value)
+        {
+            TextMeshProUGUI text = PlayerTurnOverlay.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            text.text = Name.ToUpper();
+
+            if (!LeanTween.isTweening(PlayerTurnOverlay))
+            {
+                if(Player == "Player1"){
+                        LeanTween.scale(PlayerTurnOverlay, new Vector3(2.0f, 2.0f, 2.0f), 1f)
+                .setDelay(.8f).setEase(LeanTweenType.easeInOutElastic).setOnComplete(HideTurnOverlay);
+                } else if(Player == "Player2") {
+                     LeanTween.scale(PlayerTurnOverlay, new Vector3(-2.0f,-2.0f, 2.0f), 1f)
+                .setDelay(.8f).setEase(LeanTweenType.easeInOutElastic).setOnComplete(HideTurnOverlay);
                 }
 
-                
+                 if(!LeanTween.isTweening(RoundsHandler)){
+                            StartCoroutine(Interactables(Player, value));
+                }
+            }
+
+
         }
-        private IEnumerator Interactables(string Player, bool value){
+        private IEnumerator Interactables(string Player, bool value)
+        {
 
             yield return new WaitForSeconds(2f);
-            ChoicesInteractable(Player,value);
-            
+            ChoicesInteractable(Player, value);
+
         }
-        public void HideTurnOverlay(){
-            LeanTween.scale(PlayerTurnOverlay,new Vector3(0,0,0),.1f).setEase(LeanTweenType.easeInBack).setOnComplete(ShowRounds);
+        public void HideTurnOverlay()
+        {
+            LeanTween.scale(PlayerTurnOverlay, new Vector3(0, 0, 0), .1f).setEase(LeanTweenType.easeInBack);
         }
 
-        public void CallForPlayerOneTurn(){
+        public void CallForPlayerOneTurn()
+        {
             InputController.Instance.UpdateGameState(GameState.PlayerOneTurn);
         }
-        public void CallForPlayerTwoTurn(){
+        public void CallForPlayerTwoTurn()
+        {
             InputController.Instance.UpdateGameState(GameState.PlayerTwoTurn);
         }
         public void HidePlayerChoicesPlayerOne()
         {
-            LeanTween.move(P1ChoiceHandler,new Vector2(0,-300f), 1f).setEase(LeanTweenType.easeInOutExpo);
+            LeanTween.move(P1ChoiceHandler, new Vector2(0, -300f), 1f).setEase(LeanTweenType.easeInOutExpo);
             HidePlayer1Data();
         }
         public void HidePlayerChoicesPlayerTwo()
 
         {
-            LeanTween.move(P2ChoiceHandler,new Vector2(0,300f), 1f).setEase(LeanTweenType.easeInOutExpo);
+            LeanTween.move(P2ChoiceHandler, new Vector2(0, 300f), 1f).setEase(LeanTweenType.easeInOutExpo);
             HidePlayer2Data();
         }
-          public void ResetAnimation(){
-                HidePickedResultHandler();
-                ShowChoicesHandler();
+        public void ResetAnimation()
+        {
+            HidePickedResultHandler();
+            ShowChoicesHandler();
         }
-    
+        public void ShowGameOverPanel(){
+                 LeanTween.alphaCanvas(gameOverBackOverlay,1,.6f);
+                 LeanTween.scale(GameOverPanel,new Vector3(1,1,1),1f).setDelay(.7f).setEase(LeanTweenType.easeOutElastic);
+                 GameOverCanvas(true);
+        }
+        private void GameOverCanvas(bool value){
+                CanvasGroup canvas = GameOverPanel.GetComponent<CanvasGroup>();
+                    canvas.interactable = value;     
+        }
+        public void HideGameOverPanel(){
+                
+                 LeanTween.scale(GameOverPanel,new Vector3(0,0,0),1f).setEase(LeanTweenType.easeInElastic);
+                 LeanTween.alphaCanvas(gameOverBackOverlay,1,.6f).setDelay(.7f);
+                        GameOverCanvas(false);
+        }
+
     }
 
-      
+
 }

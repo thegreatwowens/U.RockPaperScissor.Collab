@@ -24,25 +24,34 @@ namespace ddr.RockPaperScissor.UI
             
         }
         public void Options(){
+            SoundManager.Instance.PlaySoundFx("UIClicked");
             animations.ShowOption();
             optionScript.optionClicked();
         }
         public void LeaderBoard(){
+            SoundManager.Instance.PlaySoundFx("UIClicked");
             animations.ShowLeaderboard();
             LeaderboardManager.GetLeaderboard("RockPaperScissorRanking");
             LeaderboardManager.Load();
             
+            
+            
         }
         public void PlayerVersusAI(){
+            SoundManager.Instance.PlaySoundFx("UIClicked");
             SceneChanger.instance.FadeToNextScene(1);
         }
         public void PlayerVesusPlayer(){
+            SoundManager.Instance.PlaySoundFx("UIClicked");
              SceneChanger.instance.FadeToNextScene(2);
+             SoundManager.Instance.PlayMusic("PVAIMusic");
         }
         public void backToMainMenu(){
+            SoundManager.Instance.PlaySoundFx("UIClicked");
             animations.BackToMainMenu();
         }
         public void ResetLeaderBoard(){
+            SoundManager.Instance.PlaySoundFx("UIClicked");
                 LeaderboardManager.DeleteLeaderboard("RockPaperScissorRanking");
                 LeaderboardManager.CreateLeaderboard("RockPaperScissorRanking");
                 
