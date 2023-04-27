@@ -26,6 +26,8 @@ namespace ddr.RockPaperScissor.PVP
             TextMeshProUGUI PlayerOneScore;
             [SerializeField]    
             TextMeshProUGUI PlayerTwoScore;
+            [SerializeField]
+            TextMeshProUGUI RoundStatic;
 
             private void Awake() {
                 gameplayController = GetComponent<GameplayController>();
@@ -39,7 +41,7 @@ namespace ddr.RockPaperScissor.PVP
                     PlayerOneScore.text ="Score: "+pvPGameSetting.P1ScoreData().ToString();
                     PlayerTwoScore.text ="Score: "+pvPGameSetting.P2ScoreData().ToString();
                     RoundsLeft.text = "Round " +gameplayController.returnRound()+" Race to "+pvPGameSetting.bestOfRounds;
-                    
+                    RoundStatic.text = "Round "+gameplayController.returnRound();
                     
                    
             }

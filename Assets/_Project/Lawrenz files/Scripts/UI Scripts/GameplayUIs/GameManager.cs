@@ -24,7 +24,7 @@ namespace ddr.RockPaperScissor.UI
             
         }
         public void Options(){
-            SoundManager.Instance.PlaySoundFx("UIClicked");
+            SoundManager.Instance.PlaySoundFx("UIClicked2");
             animations.ShowOption();
             optionScript.optionClicked();
         }
@@ -38,11 +38,11 @@ namespace ddr.RockPaperScissor.UI
             
         }
         public void PlayerVersusAI(){
-            SoundManager.Instance.PlaySoundFx("UIClicked");
+            SoundManager.Instance.PlaySoundFx("UIClicked2");
             SceneChanger.instance.FadeToNextScene(1);
         }
         public void PlayerVesusPlayer(){
-            SoundManager.Instance.PlaySoundFx("UIClicked");
+            SoundManager.Instance.PlaySoundFx("UIClicked2");
              SceneChanger.instance.FadeToNextScene(2);
              SoundManager.Instance.PlayMusic("PVAIMusic");
         }
@@ -51,7 +51,7 @@ namespace ddr.RockPaperScissor.UI
             animations.BackToMainMenu();
         }
         public void ResetLeaderBoard(){
-            SoundManager.Instance.PlaySoundFx("UIClicked");
+            SoundManager.Instance.PlaySoundFx("UIClicked2");
                 LeaderboardManager.DeleteLeaderboard("RockPaperScissorRanking");
                 LeaderboardManager.CreateLeaderboard("RockPaperScissorRanking");
                 

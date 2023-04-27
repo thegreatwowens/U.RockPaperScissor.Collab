@@ -23,11 +23,6 @@ public class SoundManager : MonoBehaviour
         }
       
     }
-    void Start()
-    {
-            PlayMusic("MainMenuMusic");
-    }
-
 
 
     public void PlayMusic(string name){

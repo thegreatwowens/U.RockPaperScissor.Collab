@@ -31,7 +31,7 @@ namespace ddr.RockPaperScissor.UI
         
         void Start()
         {
-            slider.value = 1;
+            slider.value  = 1;
             bestOfRounds = 1;
         }
       public void SliderValueChanged(){

@@ -15,6 +15,7 @@ namespace ddr.RockPaperScissor.PVP
 
     public enum GameState
     {
+        None,
         GameStart,
         ShowPlayersChoices,
         TurnOverlay,
@@ -107,6 +108,10 @@ namespace ddr.RockPaperScissor.PVP
             }
             OnGameStateChanged?.Invoke(newState);
 
+        }
+        public GameState ReturnCurrentState(){
+
+                    return State;
         }
         
 

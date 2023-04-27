@@ -20,6 +20,9 @@ namespace ddr.RockPaperScissor.PVP
         PvPGameSetting pvPGameSetting;
         [SerializeField]
         UIHandlerController uIHandlerController;
+        [SerializeField]
+        Slider volumeSlider;
+
         //UI References
         //variables
         int playerOneScore;
@@ -50,7 +53,7 @@ namespace ddr.RockPaperScissor.PVP
         
         void Start()
         {
-
+                volumeSlider.value = SoundManager.Instance.musicSource.volume;
         }
         public void GameStart()
         {
@@ -62,12 +65,12 @@ namespace ddr.RockPaperScissor.PVP
         }
         public void HandlePlayerTurnOne()
         {
-            animationController.ShowTurnOverlay(pvPGameSetting.playerOneName(), "Player1", true);
-                                LeanTween.delayedCall(1.5f,animationController.ShowRounds);
+            StartCoroutine(GetComponent<AnimationController>().Interactables(pvPGameSetting.playerOneName(),"Player1",true,5f,GameState.PlayerOneTurn));
         }
         public void HandlePlayerTurnTwo()
         {
-            animationController.ShowTurnOverlay(pvPGameSetting.playerTwoName(), "Player2", true);
+             StartCoroutine(GetComponent<AnimationController>().Interactables(pvPGameSetting.playerTwoName(),"Player2",true,2.5f,GameState.PlayerTwoTurn));
+                        animationController.FlipRounds();
         }
         public void HandleJudgeRoundWinner()
         {
@@ -113,8 +116,7 @@ namespace ddr.RockPaperScissor.PVP
                         playerOnePicked = HandChoicesPVP.Paper;
                         animationController.ChoicesInteractable("Player1", false);
                         animationController.HidePlayerChoicesPlayerOne();
-                       
-
+                       SoundManager.Instance.PlaySoundFx("UIClicked");
                         InputController.Instance.UpdateGameState(GameState.PlayerTwoTurn);
                     }
 
@@ -124,7 +126,7 @@ namespace ddr.RockPaperScissor.PVP
                         playerTwoPicked = HandChoicesPVP.Paper;
                         animationController.ChoicesInteractable("Player2", false);
                         animationController.HidePlayerChoicesPlayerTwo();
-                        
+                        SoundManager.Instance.PlaySoundFx("UIClicked");
                         InputController.Instance.UpdateGameState(GameState.HandsResult);
                     }
                     break;
@@ -135,7 +137,7 @@ namespace ddr.RockPaperScissor.PVP
                         playerOnePicked = HandChoicesPVP.Rock;
                         animationController.ChoicesInteractable("Player1", false);
                         animationController.HidePlayerChoicesPlayerOne();
-                         
+                         SoundManager.Instance.PlaySoundFx("UIClicked");
                         InputController.Instance.UpdateGameState(GameState.PlayerTwoTurn);
                     }
 
@@ -145,6 +147,7 @@ namespace ddr.RockPaperScissor.PVP
                         playerTwoPicked = HandChoicesPVP.Rock;
                         animationController.ChoicesInteractable("Player2", false);
                         animationController.HidePlayerChoicesPlayerTwo();
+                        SoundManager.Instance.PlaySoundFx("UIClicked");
                         InputController.Instance.UpdateGameState(GameState.HandsResult);
                     }
                     break;
@@ -155,7 +158,7 @@ namespace ddr.RockPaperScissor.PVP
                         playerOnePicked = HandChoicesPVP.Scissor;
                         animationController.ChoicesInteractable("Player1", false);
                         animationController.HidePlayerChoicesPlayerOne();
-                         
+                         SoundManager.Instance.PlaySoundFx("UIClicked");
                         InputController.Instance.UpdateGameState(GameState.PlayerTwoTurn);
                     }
 
@@ -165,7 +168,7 @@ namespace ddr.RockPaperScissor.PVP
                         playerTwoPicked = HandChoicesPVP.Scissor;
                         animationController.ChoicesInteractable("Player2", false);
                         animationController.HidePlayerChoicesPlayerTwo();
-                       
+                       SoundManager.Instance.PlaySoundFx("UIClicked");
                         InputController.Instance.UpdateGameState(GameState.HandsResult);
                     }
                     break;
@@ -181,6 +184,10 @@ namespace ddr.RockPaperScissor.PVP
             currentRound =1;
             uIHandlerController.UpdateUI();
             InputController.Instance.UpdateGameState(GameState.ShowPlayersChoices);
+            SoundManager.Instance.PlaySoundFx("UIClicked2");
+        }
+        public void ExitGameSetting(){
+            SceneChanger.instance.FadeToNextScene(0);
         }
         public void HandleShowPlayerChoices()
         {
@@ -195,7 +202,7 @@ namespace ddr.RockPaperScissor.PVP
 
         IEnumerator ResultOverlayDelay()
         {
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(2.5f);
             InputController.Instance.UpdateGameState(GameState.JudgeWinner);
         }
         IEnumerator CheckScores()
@@ -231,7 +238,7 @@ namespace ddr.RockPaperScissor.PVP
         IEnumerator DelayGameOver(){
 
             animationController.HidePickedResultHandler();
-            yield return new WaitForSeconds(.8f);
+            yield return new WaitForSeconds(2f);
             InputController.Instance.UpdateGameState(GameState.GameOver);
         }
 
@@ -242,6 +249,41 @@ namespace ddr.RockPaperScissor.PVP
             uIHandlerController.UpdateUI();
             animationController.ResetAnimation();
             InputController.Instance.UpdateGameState(GameState.PlayerOneTurn);
+        }
+
+        public void CLickedOption(){
+            SoundManager.Instance.PlaySoundFx("UIClicked2");
+            animationController.ShowOptionPanel();
+
+        }
+
+        public void OptionResetGame(){
+            SoundManager.Instance.PlaySoundFx("UIClicked");
+            InputController.Instance.UpdateGameState(GameState.GameStart);
+            animationController.HideOptionPanel();
+            animationController.DisableChoiceshandler();
+            animationController.HidePlayer1Data();
+            animationController.HidePlayer2Data();
+            animationController.DisableOptionButton();
+        }
+        public void OptionBackToGame(){
+                 SoundManager.Instance.PlaySoundFx("UIClicked2");
+                animationController.HideOptionPanel();
+        }
+        public void OptionBackToMainMenu(){
+                SoundManager.Instance.PlaySoundFx("UIClicked");
+                SceneChanger.instance.FadeToNextScene(0);
+        }
+
+        public void OnVolumeChanged(){
+                SoundManager.Instance.VolumeSlider(volumeSlider.value);
+        }
+
+        public void GameOverPanelReset(){
+                SoundManager.Instance.PlaySoundFx("UIClicked");
+            InputController.Instance.UpdateGameState(GameState.GameStart);
+
+
         }
 
 
