@@ -143,6 +143,7 @@ namespace ddr.RockPaperScissor.PVP
             EnablePlayer1Data();
             EnablePlayer2Data();
             CallForPlayerOneTurn();
+            EnableOptionButton();
             
         }
         public void EnablePlayer2Data()
@@ -255,7 +256,7 @@ namespace ddr.RockPaperScissor.PVP
         }
         public void ShowGameOverPanel(){
                  LeanTween.alphaCanvas(gameOverBackOverlay,1,.6f);
-                 LeanTween.scale(GameOverPanel,new Vector3(1,1,1),1f).setDelay(.7f).setEase(LeanTweenType.easeOutElastic);
+                 LeanTween.scale(GameOverPanel,new Vector3(.8f,.8f,.8f),1f).setDelay(.7f).setEase(LeanTweenType.easeOutElastic);
                  GameOverCanvas(true);
         }
         private void GameOverCanvas(bool value){
@@ -265,8 +266,8 @@ namespace ddr.RockPaperScissor.PVP
         public void HideGameOverPanel(){
                 
                  LeanTween.scale(GameOverPanel,new Vector3(0,0,0),1f).setEase(LeanTweenType.easeInElastic);
-                 LeanTween.alphaCanvas(gameOverBackOverlay,1,.6f).setDelay(.7f);
-                        GameOverCanvas(false);
+                 LeanTween.alphaCanvas(gameOverBackOverlay,0,.6f).setDelay(.7f);
+                GameOverCanvas(false);
         }
 
         public void ShowOptionPanel(){

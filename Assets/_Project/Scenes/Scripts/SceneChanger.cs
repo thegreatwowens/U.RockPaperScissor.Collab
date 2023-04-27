@@ -19,7 +19,7 @@ public class SceneChanger : MonoBehaviour
     void Awake()
     {
         if(instance !=null && instance != this){
-            Destroy(this);
+            Destroy(this.gameObject);
             return;
              
         }
@@ -31,12 +31,13 @@ public class SceneChanger : MonoBehaviour
 
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1){
             currentScene = SceneManager.GetActiveScene();
-                    if(currentScene.buildIndex == 0){
+                    if(currentScene.buildIndex == 1){
                         SoundManager.Instance.PlayMusic("MainMenuMusic");
                     }
-                    if(currentScene.buildIndex == 1){
+                    if(currentScene.buildIndex == 2|| currentScene.buildIndex == 3){
                          SoundManager.Instance.PlayMusic("PVAIMusic");
                     }
+                    
                     FadeFromPreviousScene();
         }
     public void FadeToNextScene(int Index){

@@ -246,7 +246,7 @@ namespace ddr.RockPaperScissor.versusAI
 
         public void ExitToMainMenu()
         {
-            SceneChanger.instance.FadeToNextScene(0);
+            SceneChanger.instance.FadeToNextScene(1);
 
         }
         public void ClickedOption()

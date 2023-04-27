@@ -49,10 +49,14 @@ namespace ddr.RockPaperScissor.PVP
         HandChoicesPVP playerOnePicked;
         HandChoicesPVP playerTwoPicked;
         #endregion
-
+void Awake()
+{
+     Application.targetFrameRate=90;
+}
         
         void Start()
         {
+               
                 volumeSlider.value = SoundManager.Instance.musicSource.volume;
         }
         public void GameStart()
@@ -71,6 +75,7 @@ namespace ddr.RockPaperScissor.PVP
         {
              StartCoroutine(GetComponent<AnimationController>().Interactables(pvPGameSetting.playerTwoName(),"Player2",true,2.5f,GameState.PlayerTwoTurn));
                         animationController.FlipRounds();
+                          
         }
         public void HandleJudgeRoundWinner()
         {
@@ -192,10 +197,12 @@ namespace ddr.RockPaperScissor.PVP
         public void HandleShowPlayerChoices()
         {
             animationController.EnableChoiceshandler();
+          
         }
 
         internal void HandlePlayerPickedHandsResult()
         {
+            animationController.DisableOptionButton();
             animationController.PickedResultHandler();
             StartCoroutine(ResultOverlayDelay());
         }
@@ -217,8 +224,8 @@ namespace ddr.RockPaperScissor.PVP
         {
             // ANIMATIONS
             animationController.ShowGameOverPanel();
-            currentRound = 1;
-            pvPGameSetting.ResetScore();
+            uIHandlerController.ResultUI();
+
         }
 
         internal void HandleCheckScores()
@@ -280,8 +287,11 @@ namespace ddr.RockPaperScissor.PVP
         }
 
         public void GameOverPanelReset(){
+                currentRound = 1;
+                pvPGameSetting.ResetScore();
                 SoundManager.Instance.PlaySoundFx("UIClicked");
-            InputController.Instance.UpdateGameState(GameState.GameStart);
+            animationController.HideGameOverPanel();
+            SceneChanger.instance.FadeToNextScene(3);
 
 
         }

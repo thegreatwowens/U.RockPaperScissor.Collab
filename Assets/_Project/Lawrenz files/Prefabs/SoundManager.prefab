@@ -58,6 +58,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   - name: SliderSound
     clip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+  - name: UIClicked2
+    clip: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   musicSource: {fileID: 1202981044849212349}
   soundFxSource: {fileID: 1202981044804323690}
   fadeSpeed: 1

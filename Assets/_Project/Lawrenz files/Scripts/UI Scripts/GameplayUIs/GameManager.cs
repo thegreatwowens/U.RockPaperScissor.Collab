@@ -39,11 +39,11 @@ namespace ddr.RockPaperScissor.UI
         }
         public void PlayerVersusAI(){
             SoundManager.Instance.PlaySoundFx("UIClicked2");
-            SceneChanger.instance.FadeToNextScene(1);
+            SceneChanger.instance.FadeToNextScene(2);
         }
         public void PlayerVesusPlayer(){
             SoundManager.Instance.PlaySoundFx("UIClicked2");
-             SceneChanger.instance.FadeToNextScene(2);
+             SceneChanger.instance.FadeToNextScene(3);
              SoundManager.Instance.PlayMusic("PVAIMusic");
         }
         public void backToMainMenu(){
