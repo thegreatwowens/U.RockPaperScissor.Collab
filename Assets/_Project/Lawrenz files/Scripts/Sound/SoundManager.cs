@@ -2,6 +2,7 @@ using UnityEngine;
 using ddr.RockPaperScissor.Sound;
 using System;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class SoundManager : MonoBehaviour
     }
 
 
-    public void PlayMusic(string name){
+    public void PlayMusic(string name,bool isLooping){
          Sound sound =  Array.Find(musicSound,x => x.name == name);
             
             if(sound == null){
@@ -34,7 +35,11 @@ public class SoundManager : MonoBehaviour
 
             } 
             else{
-
+                if(isLooping){
+                        musicSource.loop = true;
+                }else
+                    musicSource.loop = false;   
+            
                 musicSource.clip = sound.clip;
                 musicSource.Play();
             }
@@ -54,7 +59,7 @@ public class SoundManager : MonoBehaviour
             }
         
     }
-    
+
     public void VolumeSlider (float volume){
                 musicSource.volume = volume;
                 soundFxSource.volume = volume;

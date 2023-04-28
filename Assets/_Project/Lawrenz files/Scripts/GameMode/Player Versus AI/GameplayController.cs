@@ -187,6 +187,7 @@ namespace ddr.RockPaperScissor.versusAI
             {
                 result_Info_text.text = "CPU Win!";
                 animationController.ResultOverlay();
+                SoundManager.Instance.PlaySoundFx("LossPVA");
                 playerData.LoseRound();
                 
                 DecreaseHealth();
@@ -200,6 +201,9 @@ namespace ddr.RockPaperScissor.versusAI
                 animationController.ResultOverlay();
                 playerData.Win();
                 streakingCount = playerData.ReturnCurrentStreak();
+                if(playerData.ReturnCurrentStreak()<3){
+                     SoundManager.Instance.PlaySoundFx("WinPVA");   
+                }
                 StartCoroutine(CheckStreaking());
                 StartCoroutine(ContinuePlay());
                 return;
@@ -239,6 +243,7 @@ namespace ddr.RockPaperScissor.versusAI
 
         public void GameFinished()
         {
+            SoundManager.Instance.PlayMusic("GameOverSoundPVA",false);
             playerData.SubmitScore();
             if (onGameFinished != null)
                 onGameFinished.Invoke();
@@ -256,7 +261,7 @@ namespace ddr.RockPaperScissor.versusAI
         }
         public void TryAgain()
         {
-            animationController.HideGameCompletedWindow();
+           SceneChanger.instance.FadeToNextScene(2);
         }
 
 

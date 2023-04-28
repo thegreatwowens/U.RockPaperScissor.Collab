@@ -66,7 +66,7 @@ namespace ddr.RockPaperScissor.UI
                                 break;
 
                         case Player.PlayerTwo:
-                                    P1Score++;
+                                    P2Score++;
                                 break;
 
                 }

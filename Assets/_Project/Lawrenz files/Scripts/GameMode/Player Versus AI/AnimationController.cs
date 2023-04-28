@@ -33,10 +33,13 @@ namespace ddr.RockPaperScissor.versusAI
                  
 
       }
+      
 
       public void GameStart(){
+              SoundManager.Instance.PlaySoundFx("HideInstruction");
               StartCoroutine(DelayInteractHandler());
               LeanTween.scale(handlerChoices,new Vector3(1,1,1),1).setDelay(.5f).setEase(LeanTweenType.easeInOutQuart);
+               SoundManager.Instance.PlaySoundFx("ShowhandlerPVA");   
               LeanTween.scale(playerdataHandler,new Vector3(1,1,1),1f).setDelay(.8f).setEase(LeanTweenType.easeInOutQuart).setOnComplete(ShowTurn);
               LeanTween.scale(optionButton,new Vector3(1,1,1),.1f);
               
@@ -81,6 +84,7 @@ namespace ddr.RockPaperScissor.versusAI
                 CanInteractChoices();
            }
      public void PlayerPicked(){
+                        SoundManager.Instance.PlaySoundFx("PickedHandlerPVA");
                    HideTurnOverlay();
                    DisableInteractChoices();
                   LeanTween.scale(handlerChoices,new Vector3(0,0,0),.5f).setEase(LeanTweenType.easeInElastic);
@@ -97,7 +101,7 @@ namespace ddr.RockPaperScissor.versusAI
           choicesHandlerCanvas.blocksRaycasts = true;
     }
      public void ShowChoicesResult(){
-
+                  SoundManager.Instance.PlaySoundFx("ShowHandlerFxPVA");
                 LeanTween.moveLocalY(playerPicked,-300f,1f).setEase(LeanTweenType.easeOutQuart);
                 LeanTween.moveLocalY(opponentPicked,300f,1f).setEase(LeanTweenType.easeOutQuart);
      }
@@ -169,6 +173,7 @@ namespace ddr.RockPaperScissor.versusAI
       }
       
       public void ShowStreakAnimation(string value){
+            
             LeanTween.cancel(resultHandlerText);
             StartCoroutine(StreakInstantiate(value));
 
@@ -176,20 +181,21 @@ namespace ddr.RockPaperScissor.versusAI
     IEnumerator StreakInstantiate(string value){
             TextMeshProUGUI text  = winningStreakObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             text.text = value +"!";
+            SoundManager.Instance.PlaySoundFx("StreakingPVA");
             yield return new WaitForSeconds(.05f);
             LeanTween.scale(streakingParentObj.transform.GetChild(0).gameObject, new Vector3(2.5f, 2.5f, 2.5f), 1f)
             .setDelay(.2f).setEase(LeanTweenType.easeOutBounce).setOnComplete(HideStreakAnimation);
                   
       }
       public void HideStreakAnimation(){
-            LeanTween.scale(streakingParentObj.transform.GetChild(0).gameObject, new Vector3(0,0,0), 1f)
-            .setEase(LeanTweenType.easeOutBounce);
+            LeanTween.scale(streakingParentObj.transform.GetChild(0).gameObject, new Vector3(0,0,0), .5f)
+            .setEase(LeanTweenType.easeInElastic);
         }
 
         public void ShowTurn()
         {
             if(LeanTween.isPaused(PlayerTurnHandler.gameObject)){
-                   LeanTween.resume(PlayerTurnHandler.gameObject);
+                  LeanTween.resume(PlayerTurnHandler.gameObject);
             }
             else{
              LeanTween.alphaCanvas(PlayerTurnHandler,1,1).setEase(LeanTweenType.easeInOutQuad).setLoopPingPong();

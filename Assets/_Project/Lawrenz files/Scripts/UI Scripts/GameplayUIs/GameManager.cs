@@ -44,7 +44,6 @@ namespace ddr.RockPaperScissor.UI
         public void PlayerVesusPlayer(){
             SoundManager.Instance.PlaySoundFx("UIClicked2");
              SceneChanger.instance.FadeToNextScene(3);
-             SoundManager.Instance.PlayMusic("PVAIMusic");
         }
         public void backToMainMenu(){
             SoundManager.Instance.PlaySoundFx("UIClicked");

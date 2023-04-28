@@ -32,10 +32,10 @@ public class SceneChanger : MonoBehaviour
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1){
             currentScene = SceneManager.GetActiveScene();
                     if(currentScene.buildIndex == 1){
-                        SoundManager.Instance.PlayMusic("MainMenuMusic");
+                        SoundManager.Instance.PlayMusic("MainMenuMusic",true);
                     }
                     if(currentScene.buildIndex == 2|| currentScene.buildIndex == 3){
-                         SoundManager.Instance.PlayMusic("PVAIMusic");
+                         SoundManager.Instance.PlayMusic("PVAIMusic",true);
                     }
                     
                     FadeFromPreviousScene();

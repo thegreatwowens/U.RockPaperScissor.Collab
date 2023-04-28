@@ -192,10 +192,11 @@ void Awake()
             SoundManager.Instance.PlaySoundFx("UIClicked2");
         }
         public void ExitGameSetting(){
-            SceneChanger.instance.FadeToNextScene(0);
+            SceneChanger.instance.FadeToNextScene(1);
         }
         public void HandleShowPlayerChoices()
         {
+             SoundManager.Instance.PlaySoundFx("ShowhandlerPVA");
             animationController.EnableChoiceshandler();
           
         }
@@ -204,16 +205,19 @@ void Awake()
         {
             animationController.DisableOptionButton();
             animationController.PickedResultHandler();
+            SoundManager.Instance.PlaySoundFx("PickedHandlerPVA");
             StartCoroutine(ResultOverlayDelay());
         }
 
         IEnumerator ResultOverlayDelay()
         {
             yield return new WaitForSeconds(2.5f);
+             SoundManager.Instance.PlaySoundFx("ShowhandlerPVA");
             InputController.Instance.UpdateGameState(GameState.JudgeWinner);
         }
         IEnumerator CheckScores()
         {
+             
             yield return new WaitForSeconds(1.5f);
             InputController.Instance.UpdateGameState(GameState.CheckScores);
 
@@ -223,6 +227,7 @@ void Awake()
         internal void HandleGameOver()
         {
             // ANIMATIONS
+            SoundManager.Instance.PlayMusic("GameOverSoundPVP",false);
             animationController.ShowGameOverPanel();
             uIHandlerController.ResultUI();
 
@@ -265,13 +270,8 @@ void Awake()
         }
 
         public void OptionResetGame(){
-            SoundManager.Instance.PlaySoundFx("UIClicked");
-            InputController.Instance.UpdateGameState(GameState.GameStart);
-            animationController.HideOptionPanel();
-            animationController.DisableChoiceshandler();
-            animationController.HidePlayer1Data();
-            animationController.HidePlayer2Data();
-            animationController.DisableOptionButton();
+            SceneChanger.instance.FadeToNextScene(3);
+
         }
         public void OptionBackToGame(){
                  SoundManager.Instance.PlaySoundFx("UIClicked2");
@@ -279,7 +279,7 @@ void Awake()
         }
         public void OptionBackToMainMenu(){
                 SoundManager.Instance.PlaySoundFx("UIClicked");
-                SceneChanger.instance.FadeToNextScene(0);
+                SceneChanger.instance.FadeToNextScene(1);
         }
 
         public void OnVolumeChanged(){

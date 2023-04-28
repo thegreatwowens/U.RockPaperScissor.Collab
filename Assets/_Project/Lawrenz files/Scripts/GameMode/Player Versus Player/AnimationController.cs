@@ -18,8 +18,7 @@ namespace ddr.RockPaperScissor.PVP
         RectTransform PlayerTurnOverlay;
         [SerializeField]
         RectTransform WinnerOverlay;
-        [SerializeField]
-        GameObject RoundsHandler;
+        public  GameObject RoundsHandler;
         [SerializeField]
         CanvasGroup gamesettingBackOverlay;
         [SerializeField]
@@ -129,6 +128,7 @@ namespace ddr.RockPaperScissor.PVP
 
         public void ShowWinner(string name)
         {
+            SoundManager.Instance.PlaySoundFx("WinPVA");
             TextMeshProUGUI text = WinnerOverlay.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             text.text = name;
             LeanTween.scale(WinnerOverlay, new Vector3(1, 1, 1), 1f).setDelay(.8f).setEase(LeanTweenType.easeOutExpo).setOnComplete(HideWinner);
@@ -212,6 +212,7 @@ namespace ddr.RockPaperScissor.PVP
         public void ShowTurn(string PlayerName,string Player){
                         TextMeshProUGUI name = PlayerTurnOverlay.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
                             name.text = PlayerName;
+                             
                             if(Player == "Player1"){
                                     LeanTween.scale(PlayerTurnOverlay,new Vector3(1.5f,1.5f,1.5f),1f)
                                     .setEase(LeanTweenType.easeOutBounce).setDelay(.5f).setOnComplete(HideTurnOverlay);
@@ -220,12 +221,10 @@ namespace ddr.RockPaperScissor.PVP
                                     .setEase(LeanTweenType.easeOutBounce).setDelay(.5f).setOnComplete(HideTurnOverlay);
                             }
                             
-             
-
         }
         public void HideTurnOverlay()
         {
-            
+            SoundManager.Instance.PlaySoundFx("TurnSound");
             LeanTween.scale(PlayerTurnOverlay, new Vector3(0, 0, 0),.1f).setEase(LeanTweenType.easeInBack);
         }
 
