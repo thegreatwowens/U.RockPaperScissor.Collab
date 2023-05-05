@@ -70,6 +70,7 @@ void Awake()
         public void HandlePlayerTurnOne()
         {
             StartCoroutine(GetComponent<AnimationController>().Interactables(pvPGameSetting.playerOneName(),"Player1",true,5f,GameState.PlayerOneTurn));
+                animationController.EnableOptionButton();
         }
         public void HandlePlayerTurnTwo()
         {
